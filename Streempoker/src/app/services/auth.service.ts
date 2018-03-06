@@ -25,7 +25,7 @@ export class AuthService {
     localStorage.setItem(this.storageAccessTokenName, fakeToken);
     this.currentUser = this.jwtHelperService.decodeToken(localStorage.getItem(this.storageAccessTokenName));
 
-    return Observable.of<boolean>(true);
+    return Observable.of<boolean>(false);
 
   //  return this.http.post('/api/authenticate', JSON.stringify(credentials))
   //   .map(response => {
