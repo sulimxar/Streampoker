@@ -1,17 +1,12 @@
 <div class="container h-100 d-flex">
   <div class="jumbotron my-auto mx-auto">
     <form class="form-signin"
-          #f="ngForm"
-          (ngSubmit)="signIn(f.value)">
+          #loginForm="ngForm"
+          (ngSubmit)="signIn(loginForm.value)">
 
       <h2 class="form-signin-heading">
         Please sign in
       </h2>
-
-      <div *ngIf="invalidLogin"
-           class="alert alert-danger">
-        Something went wrong!
-      </div>
 
       <label for="inputLogin"
              class="sr-only">
@@ -19,17 +14,36 @@
       </label>
       <input type="text"
              id="inputLogin"
-             name="login"
              ngModel
+             #inputLogin="ngModel"
+             name="login"
              class="form-control my-3"
              placeholder="Your Name"
              required
+             minlength="3"
              autofocus>
 
+      <div class="alert alert-danger"
+           *ngIf="!inputLogin.valid && inputLogin.touched">
+        <div *ngIf="inputLogin?.errors.required">
+          Name is required
+        </div>
+        <div *ngIf="inputLogin?.errors.minlength">
+          Minimum length is 3
+        </div>
+      </div>
+
       <button class="btn btn-lg btn-primary btn-block"
-              type="submit">
+              type="submit"
+              [disabled]="loginForm.invalid">
         Sign in
       </button>
+
+      <div *ngIf="invalidLogin"
+           class="alert alert-danger mt-3">
+        Something went wrong!
+      </div>
+
     </form>
   </div>
 </div>

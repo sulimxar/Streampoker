@@ -49,19 +49,14 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    console.log('Checking loging...');
 
     const token: string = this.jwtHelperService.tokenGetter();
-
-    console.log('token ' + token);
 
     if (!token) {
       return false;
     }
 
     const tokenExpired: boolean = this.jwtHelperService.isTokenExpired(token);
-
-    console.log(!tokenExpired);
 
     return !tokenExpired;
   }
