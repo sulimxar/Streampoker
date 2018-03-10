@@ -12,6 +12,9 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { UserAuthGuard } from './user-auth-guard.service';
 import { AuthService } from './services/auth.service';
 
+export function tokenGetterFactory() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -26,9 +29,7 @@ import { AuthService } from './services/auth.service';
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem('access_token');
-        },
+        tokenGetter: tokenGetterFactory,
         whitelistedDomains: []
       }
     }),
