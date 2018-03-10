@@ -21,9 +21,9 @@ export class AuthService {
 
   login(credentials) {
 
-    const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6IlZpdGFsaWkifQ.cK5mDqv2DCdx4QbGenGQJurQegpqQZw45M9Ahlf4prs';
-    localStorage.setItem(this.storageAccessTokenName, fakeToken);
-    this.currentUser = this.jwtHelperService.decodeToken(localStorage.getItem(this.storageAccessTokenName));
+    // const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6IlZpdGFsaWkifQ.cK5mDqv2DCdx4QbGenGQJurQegpqQZw45M9Ahlf4prs';
+    // localStorage.setItem(this.storageAccessTokenName, fakeToken);
+    // this.currentUser = this.jwtHelperService.decodeToken(localStorage.getItem(this.storageAccessTokenName));
 
     return Observable.of<boolean>(false);
 

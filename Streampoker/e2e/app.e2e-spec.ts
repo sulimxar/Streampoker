@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('streempoker App', () => {
+describe('streampoker App', () => {
   let page: AppPage;
 
   beforeEach(() => {
