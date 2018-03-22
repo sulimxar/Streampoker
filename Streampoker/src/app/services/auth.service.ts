@@ -19,7 +19,7 @@ export class AuthService {
 
     this.authState$ = afAuth.authState.map(s => s ? s.uid : null);
 
-    this.authState$.subscribe(uid => console.log('State changed: ' + uid));
+    //this.authState$.subscribe(uid => console.log('State changed: ' + uid));
   }
 
   signIn(): Promise<string> {

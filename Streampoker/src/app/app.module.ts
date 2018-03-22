@@ -45,8 +45,13 @@ export function tokenGetterFactory() {
     RouterModule.forRoot([
       { path: '', component: RoomComponent, canActivate: [UserAuthGuard] },
       { path: 'login', component: LoginComponent },
-      { path: 'no-access', component: NoAccessComponent }
-    ])
+      { path: 'no-access', component: NoAccessComponent },
+    ],
+    // {
+    //   onSameUrlNavigation: 'reload',
+    //   initialNavigation: false
+    // }
+  )
   ],
   providers: [
     AuthService,

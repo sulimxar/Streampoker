@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
+import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AppUser } from '../models/appUser';
@@ -9,6 +11,8 @@ import { NavigationHelperService } from './navigation-helper.service';
 
 @Injectable()
 export class UserService {
+
+  private _isInitialized: boolean;
 
   constructor(
     private authService: AuthService,
@@ -51,5 +55,20 @@ export class UserService {
 
   get isLoggedIn(): boolean {
     return this.authService.isAuthenticated;
+  }
+
+  get isInitialized(): boolean {
+    return this._isInitialized;
+  }
+
+  get whenInitialized(): Promise<boolean> {
+    if (this._isInitialized) {
+      return new Promise(v => true);
+    }
+
+    return this.authService.authState$.map(v => {
+      this._isInitialized = true;
+      return this._isInitialized;
+    }).first().toPromise();
   }
 }

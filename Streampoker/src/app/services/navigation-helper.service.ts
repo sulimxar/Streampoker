@@ -18,4 +18,9 @@ export class NavigationHelperService {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     this.router.navigateByUrl(returnUrl);
    }
+
+   reloadCurrentRoute() {
+    this.router.navigated = false;
+    this.router.navigate([this.router.url]);
+   }
 }
