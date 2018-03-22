@@ -18,6 +18,8 @@ export class AuthService {
     private afAuth: AngularFireAuth) {
 
     this.authState$ = afAuth.authState.map(s => s ? s.uid : null);
+
+    this.authState$.subscribe(uid => console.log('State changed: ' + uid));
   }
 
   signIn(): Promise<string> {
