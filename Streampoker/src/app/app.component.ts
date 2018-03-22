@@ -9,6 +9,8 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent {
 
+  isInitialized: boolean;
+
   constructor (private userService: UserService) {
 
   }
