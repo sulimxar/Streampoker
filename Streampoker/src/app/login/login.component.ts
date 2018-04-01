@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { AppUser } from '../models/appUser';
 import { Subscription } from 'rxjs/Subscription';
 import { NavigationHelperService } from '../services/navigation-helper.service';
+import { BusyService } from '../services/busy.service';
 
 @Component({
   selector: 'login',
@@ -12,12 +13,14 @@ import { NavigationHelperService } from '../services/navigation-helper.service';
 })
 export class LoginComponent implements OnDestroy {
   appUser$: Observable<AppUser>;
-  invalidLogin: boolean;
+  isInvalidLogin: boolean;
+  isLoggingIn: boolean;
   userSubscription: Subscription;
 
   constructor(
     private userService: UserService,
-    private navigationHelper: NavigationHelperService
+    private navigationHelper: NavigationHelperService,
+    private busyService: BusyService
   ) {
     this.appUser$ = userService.appUser$;
     this.userSubscription = this.appUser$.subscribe(user => this.onUserChanged(user));
@@ -27,20 +30,29 @@ export class LoginComponent implements OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  signIn(formData: any) {
-    this.userService.login(formData.login).then(result => {
+  logIn(formData: any) {
+    this.setLoginInProgress(true);
+    this.userService.logIn(formData.login).then(result => {
       if (!result) {
-        this.invalidLogin = true;
+        this.isInvalidLogin = true;
+        this.setLoginInProgress(false);
       }
     },
       error => {
-        this.invalidLogin = true;
+        this.isInvalidLogin = true;
+        this.setLoginInProgress(false);
       });
   }
 
   private onUserChanged(user: AppUser): void {
     if (user) {
       this.navigationHelper.returnFromLogin();
+      this.setLoginInProgress(false);
     }
+  }
+
+  private setLoginInProgress(isInProgress: boolean) {
+    this.isLoggingIn = isInProgress;
+    this.busyService.setBusy(isInProgress);
   }
 }

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { LoggingService } from './logging.service';
 
 
 @Injectable()
@@ -15,11 +16,10 @@ export class AuthService {
   authState$: Observable<string>;
 
   constructor(private http: HttpClient,
-    private afAuth: AngularFireAuth) {
-
+    private afAuth: AngularFireAuth,
+    private logging: LoggingService
+  ) {
     this.authState$ = afAuth.authState.map(s => s ? s.uid : null);
-
-    //this.authState$.subscribe(uid => console.log('State changed: ' + uid));
   }
 
   signIn(): Promise<string> {
@@ -29,11 +29,11 @@ export class AuthService {
 
     return this.afAuth.auth.signInAnonymously().then(
       user => {
-        console.log('Authentication succeeded: ' + user.uid);
+        this.logging.info('Authentication succeeded: ' + user.uid);
         return user ? user.uid : null;
       },
       error => {
-        console.error('Authentication failed: ' + error);
+        this.logging.error('Authentication failed: ' + error);
         return null;
       });
   }

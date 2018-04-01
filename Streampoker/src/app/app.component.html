@@ -1,13 +1,24 @@
-<div *ngIf="isInitialized;else loadingIndication">
-        <button class="btn btn-primary"
-                (click)="logout()">Logout</button>
+<div *ngIf="isInitialized"
+     class="h-100">
+        <button class="btn btn-primary m-3" style="position:absolute; left:0%;"
+                (click)="logout()">
+                Log out
+        </button>
         <router-outlet></router-outlet>
 </div>
-
-<ng-template #loadingIndication>
+<!-- <ng-template #loadingIndication>
         <div class="container h-100 d-flex">
                 <div class="my-auto mx-auto">
                         <i class="fas fa-spinner fa-spin"></i>
                 </div>
         </div>
-</ng-template>
+</ng-template> -->
+
+<div *ngIf="isBusy$ | async"
+     class="overlay">
+        <div class="container h-100 d-flex">
+                <div class="my-auto mx-auto">
+                        <i class="fas fa-spinner fa-spin"></i>
+                </div>
+        </div>
+</div>

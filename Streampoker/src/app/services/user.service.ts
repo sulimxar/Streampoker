@@ -22,7 +22,7 @@ export class UserService {
 
     }
 
-  login(loginName: string): Promise<boolean> {
+  logIn(loginName: string): Promise<boolean> {
     return this.authService.signIn().then(
       uid => {
         if (uid) {

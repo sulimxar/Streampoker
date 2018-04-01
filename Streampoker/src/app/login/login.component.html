@@ -1,51 +1,52 @@
 <div class="container h-100 d-flex">
   <div class="jumbotron my-auto mx-auto">
-    <div> {{ appUser$ | async | json }}</div>
+    <!-- <div> {{ appUser$ | async | json }}</div> -->
 
     <form class="form-signin"
           #loginForm="ngForm"
-          (ngSubmit)="signIn(loginForm.value)">
+          (ngSubmit)="logIn(loginForm.value)">
 
-      <h2 class="form-signin-heading">
-        Please sign in
-      </h2>
+      <fieldset [disabled]="isLoggingIn">
+        <h2 class="form-signin-heading">
+          Please log in
+        </h2>
 
-      <label for="inputLogin"
-             class="sr-only">
-        Your Name
-      </label>
-      <input type="text"
-             id="inputLogin"
-             ngModel
-             #inputLogin="ngModel"
-             name="login"
-             class="form-control my-3"
-             placeholder="Your Name"
-             required
-             minlength="3"
-             autofocus>
+        <label for="inputLogin"
+               class="sr-only">
+          Your Name
+        </label>
+        <input type="text"
+               id="inputLogin"
+               ngModel
+               #inputLogin="ngModel"
+               name="login"
+               class="form-control my-3"
+               placeholder="Your Name"
+               required
+               minlength="3"
+               autofocus>
 
-      <div class="alert alert-danger"
-           *ngIf="!inputLogin.valid && inputLogin.touched">
-        <div *ngIf="inputLogin?.errors.required">
-          Name is required
+        <div class="alert alert-danger"
+             *ngIf="!inputLogin.valid && inputLogin.touched">
+          <div *ngIf="inputLogin?.errors.required">
+            Name is required
+          </div>
+          <div *ngIf="inputLogin?.errors.minlength">
+            Minimum length is {{inputLogin?.errors.minlength.requiredLength}}
+          </div>
         </div>
-        <div *ngIf="inputLogin?.errors.minlength">
-          Minimum length is 3
+
+        <button class="btn btn-lg btn-primary btn-block"
+                type="submit"
+                [disabled]="loginForm.invalid">
+          Log in
+        </button>
+
+        <div *ngIf="isInvalidLogin"
+             class="alert alert-danger mt-3">
+          Something went wrong!
         </div>
-      </div>
-
-      <button class="btn btn-lg btn-primary btn-block"
-              type="submit"
-              [disabled]="loginForm.invalid">
-        Sign in
-      </button>
-
-      <div *ngIf="invalidLogin"
-           class="alert alert-danger mt-3">
-        Something went wrong!
-      </div>
-
+      </fieldset>
     </form>
   </div>
 </div>

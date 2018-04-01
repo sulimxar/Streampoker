@@ -17,6 +17,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from './../environments/environment';
 import { UserService } from './services/user.service';
 import { NavigationHelperService } from './services/navigation-helper.service';
+import { LoggingService } from './services/logging.service';
+import { BusyService } from './services/busy.service';
 
 export function tokenGetterFactory() {
   return localStorage.getItem('access_token');
@@ -57,7 +59,9 @@ export function tokenGetterFactory() {
     AuthService,
     UserAuthGuard,
     UserService,
-    NavigationHelperService
+    NavigationHelperService,
+    LoggingService,
+    BusyService
   ],
   bootstrap: [AppComponent]
 })
