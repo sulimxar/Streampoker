@@ -4,3 +4,10 @@
 html, body {
     height: 100%;
 }
+
+.debug-box {
+    background-color: bisque;
+    border-style: solid;
+    border-width: 2px;
+    border-color: red;
+}

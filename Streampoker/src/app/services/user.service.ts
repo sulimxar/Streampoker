@@ -12,7 +12,7 @@ import { NavigationHelperService } from './navigation-helper.service';
 @Injectable()
 export class UserService {
 
-  private _isInitialized: boolean;
+  isInitialized: boolean;
 
   constructor(
     private authService: AuthService,
@@ -57,18 +57,14 @@ export class UserService {
     return this.authService.isAuthenticated;
   }
 
-  get isInitialized(): boolean {
-    return this._isInitialized;
-  }
-
   get whenInitialized(): Promise<boolean> {
-    if (this._isInitialized) {
+    if (this.isInitialized) {
       return new Promise(v => true);
     }
 
     return this.authService.authState$.map(v => {
-      this._isInitialized = true;
-      return this._isInitialized;
+      this.isInitialized = true;
+      return this.isInitialized;
     }).first().toPromise();
   }
 }

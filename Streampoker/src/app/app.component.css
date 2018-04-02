@@ -1,3 +1,12 @@
+#rootContainer {
+    padding-top: 60px;
+  }
+  /* @media (max-width: 979px) {
+    #rootContainer {
+      padding-top: 0px;
+    }
+  } */
+
 .fa-spinner {
     font-size: 3em;
     color: dodgerblue;

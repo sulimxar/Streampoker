@@ -36,4 +36,8 @@ export class AppComponent {
     this.userService.logout();
     this.busyService.setBusy(false);
   }
+
+  get isLoggedIn(): boolean {
+    return this.userService.isLoggedIn;
+  }
 }
