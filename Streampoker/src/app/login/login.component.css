@@ -1,3 +1,7 @@
 div.jumbotron {
     min-width: 300px;
 }
+
+#rootDiv {
+    margin-top: -10%;
+}
