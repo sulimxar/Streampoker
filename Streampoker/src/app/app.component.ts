@@ -1,10 +1,8 @@
-import { BusyService } from './services/busy.service';
-import { Component } from '@angular/core';
-import { AuthService } from './services/auth.service';
-import { UserService } from './services/user.service';
-import { NavigationHelperService } from './services/navigation-helper.service';
-import { LoggingService } from './services/logging.service';
+import { Component, Inject } from '@angular/core';
+import { UserService, UserServiceInjectionToken } from '@shared.module';
 import { Observable } from 'rxjs/Observable';
+import { BusyService } from './services/busy.service';
+import { NavigationHelperService } from './services/navigation-helper.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +15,7 @@ export class AppComponent {
   isBusy$: Observable<boolean>;
 
   constructor(
+    @Inject(UserServiceInjectionToken)
     private userService: UserService,
     private navigationHelper: NavigationHelperService,
     private busyService: BusyService
@@ -33,7 +32,7 @@ export class AppComponent {
 
   logout() {
     this.busyService.setBusy(true);
-    this.userService.logout();
+    this.userService.logOut();
     this.busyService.setBusy(false);
   }
 

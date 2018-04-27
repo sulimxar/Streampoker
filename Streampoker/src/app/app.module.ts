@@ -1,24 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthenticatedUserService } from '@security.module';
+import { UserAuthGuard } from '@security/services/user-auth-guard.service';
+import { UserServiceInjectionToken } from '@shared.module';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from './../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { RoomComponent } from './room/room.component';
 import { NoAccessComponent } from './no-access/no-access.component';
-import { HttpClientModule } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
-import { UserAuthGuard } from './services/user-auth-guard.service';
-import { AuthService } from './services/auth.service';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { environment } from './../environments/environment';
-import { UserService } from './services/user.service';
-import { NavigationHelperService } from './services/navigation-helper.service';
-import { LoggingService } from './services/logging.service';
+import { RoomComponent } from './room/room.component';
+import { SecurityModule } from './security/security.module';
 import { BusyService } from './services/busy.service';
+import { LoggingService } from './services/logging.service';
+import { NavigationHelperService } from './services/navigation-helper.service';
+
 
 export function tokenGetterFactory() {
   return localStorage.getItem('access_token');
@@ -32,6 +33,7 @@ export function tokenGetterFactory() {
     NoAccessComponent
   ],
   imports: [
+    SecurityModule,
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
@@ -56,9 +58,11 @@ export function tokenGetterFactory() {
   )
   ],
   providers: [
-    AuthService,
+    {
+      provide: UserServiceInjectionToken, 
+      useClass: AuthenticatedUserService 
+    },
     UserAuthGuard,
-    UserService,
     NavigationHelperService,
     LoggingService,
     BusyService

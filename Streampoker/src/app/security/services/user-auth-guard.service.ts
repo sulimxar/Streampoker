@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { UserService } from './user.service';
-import { NavigationHelperService } from './navigation-helper.service';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { UserService, UserServiceInjectionToken } from '@shared.module';
+import { NavigationHelperService } from '../../services/navigation-helper.service';
 
 @Injectable()
 export class UserAuthGuard implements CanActivate {
 
   constructor(
     private router: Router,
+    @Inject(UserServiceInjectionToken)
     private userService: UserService,
     private navigationHelper: NavigationHelperService
   ) {

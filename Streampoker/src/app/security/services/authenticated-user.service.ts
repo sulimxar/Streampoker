@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from '@security/services/auth.service';
+import { UserService } from '@shared.module';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/toPromise';
-import { Observable } from 'rxjs/Observable';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AppUser } from '../models/appUser';
-import { NavigationHelperService } from './navigation-helper.service';
+import { AppUser } from '../../models/appUser';
+import { NavigationHelperService } from '../../services/navigation-helper.service';
 
 @Injectable()
-export class UserService {
+export class AuthenticatedUserService implements UserService {
 
-  isInitialized: boolean;
+  private isAuthServiceInitialized: boolean;
 
   constructor(
     private authService: AuthService,
@@ -35,7 +36,7 @@ export class UserService {
       });
   }
 
-  logout() {
+  logOut() {
     this.authService.signOut().then(r => {
       this.navigationHelper.navigateToLogin();
     });
@@ -57,13 +58,17 @@ export class UserService {
     return this.authService.isAuthenticated;
   }
 
+  get isInitialized(): boolean {
+    return this.isAuthServiceInitialized;
+  }
+
   get whenInitialized(): Promise<boolean> {
     if (this.isInitialized) {
       return new Promise(v => true);
     }
 
     return this.authService.authState$.map(v => {
-      this.isInitialized = true;
+      this.isAuthServiceInitialized = true;
       return this.isInitialized;
     }).first().toPromise();
   }

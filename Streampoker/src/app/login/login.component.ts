@@ -1,10 +1,10 @@
-import { UserService } from './../services/user.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { UserService, UserServiceInjectionToken } from '@shared.module';
 import { Observable } from 'rxjs/Observable';
-import { AppUser } from '../models/appUser';
 import { Subscription } from 'rxjs/Subscription';
-import { NavigationHelperService } from '../services/navigation-helper.service';
+import { AppUser } from '../models/appUser';
 import { BusyService } from '../services/busy.service';
+import { NavigationHelperService } from '../services/navigation-helper.service';
 
 @Component({
   selector: 'login',
@@ -18,6 +18,7 @@ export class LoginComponent implements OnDestroy {
   userSubscription: Subscription;
 
   constructor(
+    @Inject(UserServiceInjectionToken)
     private userService: UserService,
     private navigationHelper: NavigationHelperService,
     private busyService: BusyService

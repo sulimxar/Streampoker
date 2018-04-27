@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { LoggingService } from './logging.service';
+import { LoggingService } from '../../services/logging.service';
 
 
 @Injectable()
