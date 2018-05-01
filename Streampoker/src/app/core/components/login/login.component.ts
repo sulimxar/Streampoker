@@ -1,10 +1,8 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { UserService, UserServiceInjectionToken } from '@shared.module';
+import { AppUser, BusyService, BusyServiceInjectionToken, 
+  NavigationService, NavigationServiceInjectionToken, UserService, UserServiceInjectionToken } from '@shared.module';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { AppUser } from '../models/appUser';
-import { BusyService } from '../services/busy.service';
-import { NavigationHelperService } from '../services/navigation-helper.service';
 
 @Component({
   selector: 'login',
@@ -20,7 +18,9 @@ export class LoginComponent implements OnDestroy {
   constructor(
     @Inject(UserServiceInjectionToken)
     private userService: UserService,
-    private navigationHelper: NavigationHelperService,
+    @Inject(NavigationServiceInjectionToken)
+    private navigationService: NavigationService,
+    @Inject(BusyServiceInjectionToken)
     private busyService: BusyService
   ) {
     this.appUser$ = userService.appUser$;
@@ -47,7 +47,7 @@ export class LoginComponent implements OnDestroy {
 
   private onUserChanged(user: AppUser): void {
     if (user) {
-      this.navigationHelper.returnFromLogin();
+      this.navigationService.returnFromLogin();
       this.setLoginInProgress(false);
     }
   }

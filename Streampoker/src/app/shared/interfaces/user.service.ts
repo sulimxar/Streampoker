@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { AppUser } from '../../models/appUser';
+import { AppUser } from '../models/appUser';
 
 export interface UserService {
     readonly appUser$: Observable<AppUser>;

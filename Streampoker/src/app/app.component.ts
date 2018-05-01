@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { UserService, UserServiceInjectionToken } from '@shared.module';
+import { BusyService, BusyServiceInjectionToken, NavigationService, 
+  NavigationServiceInjectionToken, UserService, UserServiceInjectionToken } from '@shared.module';
 import { Observable } from 'rxjs/Observable';
-import { BusyService } from './services/busy.service';
-import { NavigationHelperService } from './services/navigation-helper.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +16,9 @@ export class AppComponent {
   constructor(
     @Inject(UserServiceInjectionToken)
     private userService: UserService,
-    private navigationHelper: NavigationHelperService,
+    @Inject(NavigationServiceInjectionToken)
+    private navigationService: NavigationService,
+    @Inject(BusyServiceInjectionToken)
     private busyService: BusyService
   ) {
     this.isBusy$ = this.busyService.isBusy$;
@@ -25,7 +26,7 @@ export class AppComponent {
 
     userService.whenInitialized.then(v => {
       this.isInitialized = true;
-      navigationHelper.reloadCurrentRoute();
+      navigationService.reloadCurrentLocation();
       this.busyService.setBusy(false);
     });
   }

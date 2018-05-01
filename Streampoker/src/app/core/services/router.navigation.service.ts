@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationService } from '@shared.module';
 
 @Injectable()
-export class NavigationHelperService {
+export class RouterNavigationService implements NavigationService {
 
   constructor(
     private route: ActivatedRoute,
@@ -19,7 +20,7 @@ export class NavigationHelperService {
     this.router.navigateByUrl(returnUrl);
    }
 
-   reloadCurrentRoute() {
+   reloadCurrentLocation() {
     this.router.navigated = false;
     this.router.navigate([this.router.url]);
    }

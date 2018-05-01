@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AuthService } from './services/auth.service';
+import { FirebaseAuthService } from './services/firebase.auth.service';
+import { AuthServiceInjectionToken } from '@shared.module';
 
 export { AuthenticatedUserService } from './services/authenticated-user.service';
 
@@ -10,7 +11,10 @@ export { AuthenticatedUserService } from './services/authenticated-user.service'
   ],
   declarations: [],
   providers: [
-    AuthService
+    {
+      provide: AuthServiceInjectionToken,
+      useClass: FirebaseAuthService
+    }
   ]
 })
 export class SecurityModule { }

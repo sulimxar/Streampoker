@@ -4,21 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ConsoleLoggingService, CoreModule, RouterNavigationService, ToggleBusyService } from '@core.module';
 import { AuthenticatedUserService } from '@security.module';
 import { UserAuthGuard } from '@security/services/user-auth-guard.service';
-import { UserServiceInjectionToken } from '@shared.module';
+import { BusyServiceInjectionToken, LoggingServiceInjectionToken, 
+  NavigationServiceInjectionToken, UserServiceInjectionToken } from '@shared.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from './../environments/environment';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { NoAccessComponent } from './no-access/no-access.component';
 import { RoomComponent } from './room/room.component';
 import { SecurityModule } from './security/security.module';
-import { BusyService } from './services/busy.service';
-import { LoggingService } from './services/logging.service';
-import { NavigationHelperService } from './services/navigation-helper.service';
 
 
 export function tokenGetterFactory() {
@@ -28,11 +25,10 @@ export function tokenGetterFactory() {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     RoomComponent,
-    NoAccessComponent
   ],
   imports: [
+    CoreModule,
     SecurityModule,
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -47,9 +43,7 @@ export function tokenGetterFactory() {
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: RoomComponent, canActivate: [UserAuthGuard] },
-      { path: 'login', component: LoginComponent },
-      { path: 'no-access', component: NoAccessComponent },
+      { path: '', component: RoomComponent, canActivate: [UserAuthGuard] }
     ],
     // {
     //   onSameUrlNavigation: 'reload',
@@ -59,13 +53,22 @@ export function tokenGetterFactory() {
   ],
   providers: [
     {
-      provide: UserServiceInjectionToken, 
-      useClass: AuthenticatedUserService 
+      provide: UserServiceInjectionToken,
+      useClass: AuthenticatedUserService
     },
     UserAuthGuard,
-    NavigationHelperService,
-    LoggingService,
-    BusyService
+    {
+      provide: NavigationServiceInjectionToken,
+      useClass: RouterNavigationService 
+    },
+    {
+      provide: LoggingServiceInjectionToken,
+      useClass: ConsoleLoggingService 
+    },
+    {
+      provide: BusyServiceInjectionToken,
+      useClass: ToggleBusyService 
+    }
   ],
   bootstrap: [AppComponent]
 })

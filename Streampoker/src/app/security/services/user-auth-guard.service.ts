@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { UserService, UserServiceInjectionToken } from '@shared.module';
-import { NavigationHelperService } from '../../services/navigation-helper.service';
+import { NavigationService, NavigationServiceInjectionToken, UserService, UserServiceInjectionToken } from '@shared.module';
 
 @Injectable()
 export class UserAuthGuard implements CanActivate {
@@ -10,7 +9,8 @@ export class UserAuthGuard implements CanActivate {
     private router: Router,
     @Inject(UserServiceInjectionToken)
     private userService: UserService,
-    private navigationHelper: NavigationHelperService
+    @Inject(NavigationServiceInjectionToken)
+    private navigationService: NavigationService
   ) {
   }
 
@@ -25,7 +25,7 @@ export class UserAuthGuard implements CanActivate {
       return true;
     }
 
-    this.navigationHelper.navigateToLogin();
+    this.navigationService.navigateToLogin();
 
     return false;
   }

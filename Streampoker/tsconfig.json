@@ -25,6 +25,9 @@
       ],
       "@shared.module": [
         "app/shared/shared.module"
+      ],
+      "@core.module": [
+        "app/core/core.module"
       ]
     }
   }
