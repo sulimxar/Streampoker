@@ -5,10 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ConsoleLoggingService, CoreModule, RouterNavigationService, ToggleBusyService } from '@core.module';
-import { AuthenticatedUserService } from '@security.module';
-import { UserAuthGuard } from '@security/services/user-auth-guard.service';
-import { BusyServiceInjectionToken, LoggingServiceInjectionToken, 
-  NavigationServiceInjectionToken, UserServiceInjectionToken } from '@shared.module';
+import { AuthenticatedUserService, InteractiveUserAuthGuardService } from '@security.module';
+import { BusyServiceInjectionToken, LoggingServiceInjectionToken,
+  NavigationServiceInjectionToken, UserServiceInjectionToken, UserAuthGuardServiceInjectionToken } from '@shared.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -43,7 +42,7 @@ export function tokenGetterFactory() {
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: RoomComponent, canActivate: [UserAuthGuard] }
+      { path: '', component: RoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] }
     ],
     // {
     //   onSameUrlNavigation: 'reload',
@@ -56,7 +55,10 @@ export function tokenGetterFactory() {
       provide: UserServiceInjectionToken,
       useClass: AuthenticatedUserService
     },
-    UserAuthGuard,
+    {
+      provide: UserAuthGuardServiceInjectionToken,
+      useClass: InteractiveUserAuthGuardService
+    },
     {
       provide: NavigationServiceInjectionToken,
       useClass: RouterNavigationService 
