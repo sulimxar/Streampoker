@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { AppUser, AuthService, AuthServiceInjectionToken, 
-  NavigationService, NavigationServiceInjectionToken, UserService } from '@shared.module';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AppUser, AuthService, AuthServiceInjectionToken, NavigationService, 
+  NavigationServiceInjectionToken, UserRepositoryService, UserRepositoryServiceInjectionToken,
+  UserService } from '@shared.module';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/first';
@@ -16,9 +16,10 @@ export class AuthenticatedUserService implements UserService {
   constructor(
     @Inject(AuthServiceInjectionToken)
     private authService: AuthService,
-    private db: AngularFireDatabase,
     @Inject(NavigationServiceInjectionToken)
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    @Inject(UserRepositoryServiceInjectionToken)
+    private userRepository: UserRepositoryService
   ) {
 
   }
@@ -27,9 +28,7 @@ export class AuthenticatedUserService implements UserService {
     return this.authService.signIn().then(
       uid => {
         if (uid) {
-          this.db.object('/users/' + uid).update({
-            loginName: loginName
-          });
+          this.userRepository.saveUser(new AppUser(uid, loginName));
           return true;
         }
         return false;
@@ -46,8 +45,7 @@ export class AuthenticatedUserService implements UserService {
     return this.authService.authState$
       .switchMap(uid => {
         if (uid) {
-          return this.db.object('/users/' + uid).valueChanges().map(
-            u => new AppUser(uid, (u as any).loginName));
+          return this.userRepository.getUser(uid);
         }
 
         return Observable.of(null);

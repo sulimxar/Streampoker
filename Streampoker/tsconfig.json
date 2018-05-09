@@ -17,9 +17,6 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@security/*": [
-        "app/security/*"
-      ],
       "@security.module": [
         "app/security/security.module"
       ],
@@ -28,6 +25,9 @@
       ],
       "@core.module": [
         "app/core/core.module"
+      ],
+      "@data-layer.module": [
+        "app/data-layer/data-layer.module"
       ]
     }
   }

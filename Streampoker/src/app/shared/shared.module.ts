@@ -20,6 +20,9 @@ export const AuthServiceInjectionToken = new InjectionToken<UserService>('AuthSe
 export { UserAuthGuardService } from './interfaces/user-auth-guard.service';
 export const UserAuthGuardServiceInjectionToken = new InjectionToken<UserService>('UserAuthGuardService');
 
+export { UserRepositoryService } from './interfaces/user-repository.service';
+export const UserRepositoryServiceInjectionToken = new InjectionToken<UserService>('UserRepositoryService');
+
 export { AppUser } from './models/appUser';
 
 @NgModule({
