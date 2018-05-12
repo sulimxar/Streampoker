@@ -28,6 +28,9 @@
       ],
       "@data-layer.module": [
         "app/data-layer/data-layer.module"
+      ],
+      "@room.module": [
+        "app/room/room.module"
       ]
     }
   }
