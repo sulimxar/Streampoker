@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import { AppUser, AuthService, AuthServiceInjectionToken, NavigationService, 
+import {
+  AppUser, AuthService, AuthServiceInjectionToken, NavigationService,
   NavigationServiceInjectionToken, UserRepositoryService, UserRepositoryServiceInjectionToken,
-  UserService } from '@shared.module';
+  UserService
+} from '@shared.module';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/first';
@@ -68,15 +70,6 @@ export class AuthenticatedUserService implements UserService {
     if (this.isInitialized) {
       return new Promise(v => true);
     }
-
-    // if (this.whenInitializedPromise) {
-    //   return this.whenInitializedPromise;
-    // }
-
-    // this.whenInitializedPromise = this.authService.authState$.map(v => {
-    //   this.isAuthServiceInitialized = true;
-    //   return this.isInitialized;
-    // }).first().toPromise();
 
     return this.whenInitializedPromise;
   }
