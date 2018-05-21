@@ -18,9 +18,6 @@ export class InteractiveUserAuthGuardService implements UserAuthGuardService {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.userService.isInitialized) {
-      // User auth service is not initialized, so ignore all activations without redirecting to
-      // the Login page. When it's initialized app.component will take care about the rest.
-      //return false;
       const promise = this.userService.whenInitialized;
       return promise.then(() => {
         return this.canActivateLogic(state);
@@ -28,7 +25,6 @@ export class InteractiveUserAuthGuardService implements UserAuthGuardService {
           console.log(error);
           return false;
       });
-      //return promise;
     }
 
     return this.canActivateLogic(state);

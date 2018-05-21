@@ -21,7 +21,7 @@ export class RouterNavigationService implements NavigationService {
    }
 
    reloadCurrentLocation() {
-    //this.router.navigated = false;
-    //this.router.navigate([this.router.url]);
+    this.router.navigated = false;
+    this.router.navigate([this.router.url]);
    }
 }

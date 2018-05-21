@@ -26,7 +26,6 @@ export class AppComponent {
 
     userService.whenInitialized.then(v => {
       this.isInitialized = true;
-      navigationService.reloadCurrentLocation();
       this.busyService.setBusy(false);
     });
   }
