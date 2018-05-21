@@ -1,10 +1,10 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
 .home-row {
-    @extend .col-8;
-    @extend .col-sm-7;
-    @extend .col-md-6;
-    @extend .col-lg-5;
-    @extend .col-xl-4;
+    @extend .col-9;
+    @extend .col-sm-8;
+    @extend .col-md-7;
+    @extend .col-lg-6;
+    @extend .col-xl-5;
     @extend .m-auto
 }
