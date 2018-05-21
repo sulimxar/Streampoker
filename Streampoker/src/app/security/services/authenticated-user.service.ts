@@ -12,6 +12,7 @@ import 'rxjs/add/operator/toPromise';
 export class AuthenticatedUserService implements UserService {
 
   private isAuthServiceInitialized: boolean;
+  private whenInitializedPromise: Promise<boolean>;
 
   constructor(
     @Inject(AuthServiceInjectionToken)
@@ -21,7 +22,10 @@ export class AuthenticatedUserService implements UserService {
     @Inject(UserRepositoryServiceInjectionToken)
     private userRepository: UserRepositoryService
   ) {
-
+    this.whenInitializedPromise = this.authService.authState$.map(v => {
+      this.isAuthServiceInitialized = true;
+      return this.isInitialized;
+    }).first().toPromise();
   }
 
   logIn(loginName: string): Promise<boolean> {
@@ -37,7 +41,7 @@ export class AuthenticatedUserService implements UserService {
 
   logOut() {
     this.authService.signOut().then(r => {
-      this.navigationService.navigateToLogin();
+      this.navigationService.navigateToLogin(null);
     });
   }
 
@@ -65,9 +69,15 @@ export class AuthenticatedUserService implements UserService {
       return new Promise(v => true);
     }
 
-    return this.authService.authState$.map(v => {
-      this.isAuthServiceInitialized = true;
-      return this.isInitialized;
-    }).first().toPromise();
+    // if (this.whenInitializedPromise) {
+    //   return this.whenInitializedPromise;
+    // }
+
+    // this.whenInitializedPromise = this.authService.authState$.map(v => {
+    //   this.isAuthServiceInitialized = true;
+    //   return this.isInitialized;
+    // }).first().toPromise();
+
+    return this.whenInitializedPromise;
   }
 }

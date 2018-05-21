@@ -1,7 +1,7 @@
 
 export interface NavigationService {
 
-    navigateToLogin(): void;
+    navigateToLogin(returnUrl: string): void;
 
     returnFromLogin(): void;
 

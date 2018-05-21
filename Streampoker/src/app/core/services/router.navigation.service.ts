@@ -11,8 +11,8 @@ export class RouterNavigationService implements NavigationService {
   ) {
    }
 
-   navigateToLogin() {
-    this.router.navigate(['/login'], { queryParams: { returnUrl: this.route.snapshot.url }});
+   navigateToLogin(returnUrl: string) {
+    this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl }});
    }
 
    returnFromLogin() {
@@ -21,7 +21,7 @@ export class RouterNavigationService implements NavigationService {
    }
 
    reloadCurrentLocation() {
-    this.router.navigated = false;
-    this.router.navigate([this.router.url]);
+    //this.router.navigated = false;
+    //this.router.navigate([this.router.url]);
    }
 }
