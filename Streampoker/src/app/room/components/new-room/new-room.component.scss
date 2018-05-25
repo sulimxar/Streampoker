@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+.new-room-row {
+    @extend .col-9;
+    @extend .col-sm-8;
+    @extend .col-md-7;
+    @extend .col-lg-6;
+    @extend .col-xl-5;
+    @extend .m-auto
+}

@@ -31,9 +31,9 @@ export class LoginComponent implements OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  logIn(formData: any) {
+  logIn(formLogin: any) {
     this.setLoginInProgress(true);
-    this.userService.logIn(formData.login).then(result => {
+    this.userService.logIn(formLogin.login).then(result => {
       if (!result) {
         this.isInvalidLogin = true;
         this.setLoginInProgress(false);

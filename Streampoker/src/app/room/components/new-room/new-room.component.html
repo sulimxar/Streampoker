@@ -1,3 +1,47 @@
-<p>
-  new-room works!
-</p>
+<h3 class="p-3">
+  New Room
+</h3>
+
+<div class="container mt-5">
+  <form #formNewRoom="ngForm"
+        (ngSubmit)="createRoom(formNewRoom.value)">
+    <fieldset>
+      <div class="row">
+        <div class="new-room-row">
+          <div class="d-flex">
+            <div class="p-2 w-100">
+              <input type="text"
+                     placeholder="Room name..."
+                     class="form-control mb-3"
+                     id="inputRoomName"
+                     ngModel
+                     #inputRoomName="ngModel"
+                     name="roomName"
+                     required
+                     minlength="2"
+                     autofocus>
+              <div class="alert alert-danger"
+                   *ngIf="!inputRoomName.valid && inputRoomName.touched">
+                <div *ngIf="inputRoomName?.errors.required">
+                  Name is required
+                </div>
+                <div *ngIf="inputRoomName?.errors.minlength">
+                  Minimum length is {{inputRoomName?.errors.minlength.requiredLength}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="row mt-3">
+      <div class="new-room-row text-center">
+        <button class="btn btn-primary"
+                type="submit"
+                [disabled]="formNewRoom.invalid">
+          Create a Room
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

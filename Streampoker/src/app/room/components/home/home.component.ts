@@ -12,4 +12,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  goToRoom(formGoToRoom) {
+    console.log(formGoToRoom);
+  }
 }

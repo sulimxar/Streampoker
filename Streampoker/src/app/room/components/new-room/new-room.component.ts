@@ -12,4 +12,7 @@ export class NewRoomComponent implements OnInit {
   ngOnInit() {
   }
 
+  createRoom(formNewRoom) {
+    console.log(formNewRoom);
+  }
 }
