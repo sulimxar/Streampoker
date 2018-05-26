@@ -13,7 +13,8 @@ import { RoomComponent } from './components/room/room.component';
     FormsModule,
     RouterModule.forChild([
       { path: '', component: HomeComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
-      { path: 'new-room', component: NewRoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] }
+      { path: 'new-room', component: NewRoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
+      { path: 'room', component: RoomComponent }
     ])
   ],
   declarations: [

@@ -15,6 +15,15 @@ export class RouterNavigationService implements NavigationService {
     this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl }});
    }
 
+   navigateToNewRoom(): void {
+    this.router.navigate(['/new-room']);
+   }
+
+   navigateToRoom(roomKey: string): void {
+     console.log('roomKey', roomKey);
+    this.router.navigate(['/room'], { queryParams: { key: roomKey }});
+   }
+
    returnFromLogin() {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     this.router.navigateByUrl(returnUrl);
