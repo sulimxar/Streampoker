@@ -8,6 +8,11 @@ import { AuthService } from './interfaces/auth.service';
 import { UserRepositoryService } from './interfaces/user-repository.service';
 import { RoomRepositoryService } from './interfaces/room-repository.service';
 import { UserAuthGuardService } from './interfaces/user-auth-guard.service';
+import { RoomService } from './interfaces/room.service';
+
+
+// ===================================  EXPORT
+
 
 // Models
 
@@ -19,11 +24,12 @@ export { Room } from './models/room';
 export type UserService = UserService;
 export type LoggingService = LoggingService;
 export type BusyService = BusyService;
-export type NavigationService = NavigationService ;
-export type AuthService = AuthService ;
-export type UserAuthGuardService = UserAuthGuardService ;
-export type UserRepositoryService = UserRepositoryService ;
-export type RoomRepositoryService = RoomRepositoryService ;
+export type NavigationService = NavigationService;
+export type AuthService = AuthService;
+export type UserAuthGuardService = UserAuthGuardService;
+export type UserRepositoryService = UserRepositoryService;
+export type RoomRepositoryService = RoomRepositoryService;
+export type RoomService = RoomService;
 
 // Tokens
 
@@ -35,6 +41,7 @@ export const AuthServiceInjectionToken = new InjectionToken<UserService>('AuthSe
 export const UserAuthGuardServiceInjectionToken = new InjectionToken<AuthService>('UserAuthGuardService');
 export const UserRepositoryServiceInjectionToken = new InjectionToken<UserRepositoryService>('UserRepositoryService');
 export const RoomRepositoryServiceInjectionToken = new InjectionToken<RoomRepositoryService>('RoomRepositoryService');
+export const RoomServiceInjectionToken = new InjectionToken<RoomService>('RoomService');
 
 @NgModule({
   imports: [

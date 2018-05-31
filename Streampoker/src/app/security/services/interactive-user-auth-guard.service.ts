@@ -22,7 +22,6 @@ export class InteractiveUserAuthGuardService implements UserAuthGuardService {
       return promise.then(() => {
         return this.canActivateLogic(state);
       }, error => {
-          console.log(error);
           return false;
       });
     }

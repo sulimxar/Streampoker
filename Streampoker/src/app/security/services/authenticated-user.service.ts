@@ -68,7 +68,7 @@ export class AuthenticatedUserService implements UserService {
 
   get whenInitialized(): Promise<boolean> {
     if (this.isInitialized) {
-      return new Promise(v => true);
+      return Promise.resolve<boolean>(true);
     }
 
     return this.whenInitializedPromise;

@@ -9,28 +9,27 @@ export class RouterNavigationService implements NavigationService {
     private route: ActivatedRoute,
     private router: Router
   ) {
-   }
+  }
 
-   navigateToLogin(returnUrl: string) {
-    this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl }});
-   }
+  navigateToLogin(returnUrl: string) {
+    this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
+  }
 
-   navigateToNewRoom(): void {
+  navigateToNewRoom(): void {
     this.router.navigate(['/new-room']);
-   }
+  }
 
-   navigateToRoom(roomKey: string): void {
-     console.log('roomKey', roomKey);
-    this.router.navigate(['/room'], { queryParams: { key: roomKey }});
-   }
+  navigateToRoom(roomKey: string): void {
+    this.router.navigate(['/room'], { queryParams: { key: roomKey } });
+  }
 
-   returnFromLogin() {
+  returnFromLogin() {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     this.router.navigateByUrl(returnUrl);
-   }
+  }
 
-   reloadCurrentLocation() {
+  reloadCurrentLocation() {
     this.router.navigated = false;
     this.router.navigate([this.router.url]);
-   }
+  }
 }

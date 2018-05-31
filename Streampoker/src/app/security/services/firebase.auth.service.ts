@@ -25,7 +25,7 @@ export class FirebaseAuthService implements AuthService {
 
   signIn(): Promise<string> {
     if (this.isAuthenticated) {
-      return new Promise(() => this.currentUser.uid);
+      return Promise.resolve<string>(this.currentUser.uid);
     }
 
     return this.afAuth.auth.signInAnonymously().then(

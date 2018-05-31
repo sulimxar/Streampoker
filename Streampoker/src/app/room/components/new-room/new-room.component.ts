@@ -1,6 +1,7 @@
+import { RoomService } from './../../../shared/interfaces/room.service';
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { BusyService, BusyServiceInjectionToken, NavigationService, 
-  NavigationServiceInjectionToken, UserService, UserServiceInjectionToken, AppUser } from '@shared.module';
+  NavigationServiceInjectionToken, UserService, UserServiceInjectionToken, AppUser, RoomServiceInjectionToken } from '@shared.module';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -16,6 +17,8 @@ export class NewRoomComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(UserServiceInjectionToken)
     private userService: UserService,
+    @Inject(RoomServiceInjectionToken)
+    private roomService: RoomService,
     @Inject(NavigationServiceInjectionToken)
     private navigationService: NavigationService,
     @Inject(BusyServiceInjectionToken)
@@ -37,15 +40,14 @@ export class NewRoomComponent implements OnInit, OnDestroy {
       // If user is not set - reload the current view to reapply security policies
       this.navigationService.reloadCurrentLocation();
     }
-
-    console.log('User changed: ', user);
   }
 
   createRoom(formNewRoom) {
     this.busyService.setBusy(true);
-    console.log(formNewRoom);
-    //this.currentUser.
-    this.busyService.setBusy(false);
-    this.navigationService.navigateToRoom(formNewRoom.roomName);
+
+    this.roomService.createRoom(formNewRoom.roomName).then(roomKey => {
+      this.busyService.setBusy(false);
+      this.navigationService.navigateToRoom(roomKey);
+    });
   }
 }
