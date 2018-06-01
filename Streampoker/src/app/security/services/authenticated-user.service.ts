@@ -15,6 +15,7 @@ export class AuthenticatedUserService implements UserService {
 
   private isAuthServiceInitialized: boolean;
   private whenInitializedPromise: Promise<boolean>;
+  private lastAuthenticatedAppUser: AppUser;
 
   constructor(
     @Inject(AuthServiceInjectionToken)
@@ -28,6 +29,10 @@ export class AuthenticatedUserService implements UserService {
       this.isAuthServiceInitialized = true;
       return this.isInitialized;
     }).first().toPromise();
+
+    this.appUser$.subscribe(user => {
+      this.lastAuthenticatedAppUser = user;
+    });
   }
 
   logIn(loginName: string): Promise<boolean> {
@@ -56,6 +61,10 @@ export class AuthenticatedUserService implements UserService {
 
         return Observable.of(null);
       });
+  }
+
+  get appUser(): AppUser {
+    return this.lastAuthenticatedAppUser;
   }
 
   get isLoggedIn(): boolean {

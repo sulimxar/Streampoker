@@ -19,6 +19,10 @@ import { RoomService } from './interfaces/room.service';
 export { AppUser } from './models/appUser';
 export { Room } from './models/room';
 
+// Classes
+
+export { Guid } from './utils/guid';
+
 // Interfaces
 
 export type UserService = UserService;

@@ -1,13 +1,34 @@
-import { Injectable } from '@angular/core';
-import { RoomService } from '@shared.module';
+import { Injectable, Inject } from '@angular/core';
+import { RoomService, RoomRepositoryServiceInjectionToken, RoomRepositoryService, 
+  UserServiceInjectionToken, UserService } from '@shared.module';
+import { Guid } from '@shared.module';
 
 @Injectable()
 export class BasicRoomService implements RoomService {
 
-  constructor() { }
+  constructor(
+    @Inject(RoomRepositoryServiceInjectionToken)
+    private roomRepositoryService: RoomRepositoryService,
+    @Inject(UserServiceInjectionToken)
+    private userService: UserService,
+  ) {
 
-  createRoom(name: string): Promise<string> {
-    return Promise.resolve<string>('rnkey');
   }
 
+  createRoom(roomName: string): Promise<string> {
+    const ownerId = this.userService.appUser.uid;
+    if (!ownerId) {
+      throw new Error('Parameter ownerId cannot be null.');
+    }
+
+    const roomKey = this.generateRoomKey();
+
+    return this.roomRepositoryService.addRoom(ownerId, roomKey, roomName).then<string>(uid => roomKey);
+  }
+
+  private generateRoomKey(): string {
+    const guid = Guid.newGuid();
+    const roomKey = guid.substring(0, 5).toUpperCase();
+    return roomKey;
+  }
 }
