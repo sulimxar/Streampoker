@@ -1,4 +1,4 @@
-import { RoomService } from './../../../shared/interfaces/room.service';
+import { RoomService } from '@shared.module';
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { BusyService, BusyServiceInjectionToken, NavigationService, 
   NavigationServiceInjectionToken, UserService, UserServiceInjectionToken, AppUser, RoomServiceInjectionToken } from '@shared.module';

@@ -8,6 +8,9 @@ import { HomeComponent } from './components/home/home.component';
 import { NewRoomComponent } from './components/new-room/new-room.component';
 import { RoomComponent } from './components/room/room.component';
 import { BasicRoomService } from './services/basic-room.service';
+import { RoomGuestComponent } from './components/room-guest/room-guest.component';
+import { RoomAdminComponent } from './components/room-admin/room-admin.component';
+import { RoomHeaderComponent } from './components/room-header/room-header.component';
 
 @NgModule({
   imports: [
@@ -16,13 +19,16 @@ import { BasicRoomService } from './services/basic-room.service';
     RouterModule.forChild([
       { path: '', component: HomeComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
       { path: 'new-room', component: NewRoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
-      { path: 'room', component: RoomComponent }
+      { path: 'room/:key', component: RoomComponent }
     ])
   ],
   declarations: [
     RoomComponent,
     HomeComponent,
-    NewRoomComponent
+    NewRoomComponent,
+    RoomGuestComponent,
+    RoomAdminComponent,
+    RoomHeaderComponent
   ],
   providers: [
     {

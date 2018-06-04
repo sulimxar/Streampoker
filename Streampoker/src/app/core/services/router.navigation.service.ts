@@ -20,7 +20,7 @@ export class RouterNavigationService implements NavigationService {
   }
 
   navigateToRoom(roomKey: string): void {
-    this.router.navigate(['/room'], { queryParams: { key: roomKey } });
+    this.router.navigate(['/room/' + roomKey]);
   }
 
   returnFromLogin() {
