@@ -9,6 +9,7 @@ import { UserRepositoryService } from './interfaces/user-repository.service';
 import { RoomRepositoryService } from './interfaces/room-repository.service';
 import { UserAuthGuardService } from './interfaces/user-auth-guard.service';
 import { RoomService } from './interfaces/room.service';
+import { RestrictInputDirective } from './utils/restrict-input.directive';
 
 
 // ===================================  EXPORT
@@ -51,6 +52,7 @@ export const RoomServiceInjectionToken = new InjectionToken<RoomService>('RoomSe
   imports: [
     CommonModule
   ],
-  declarations: []
+  declarations: [RestrictInputDirective],
+  exports: [RestrictInputDirective]
 })
 export class SharedModule { }

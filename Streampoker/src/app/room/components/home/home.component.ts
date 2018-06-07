@@ -1,5 +1,6 @@
 import { NavigationService, NavigationServiceInjectionToken } from '@shared.module';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { ValueEventRegistration } from '@firebase/database/dist/esm/src/core/view/EventRegistration';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,12 @@ import { Component, OnInit, Inject } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  private keyValueField: string;
+
   constructor(
     @Inject(NavigationServiceInjectionToken)
     private navigationService: NavigationService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -22,5 +26,13 @@ export class HomeComponent implements OnInit {
 
   newRoom() {
     this.navigationService.navigateToNewRoom();
+  }
+
+  set keyValue(value: string) {
+    this.keyValueField = value.toUpperCase();
+  }
+
+  get keyValue(): string {
+    return this.keyValueField;
   }
 }

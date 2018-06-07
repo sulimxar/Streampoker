@@ -8,7 +8,7 @@ import { ConsoleLoggingService, CoreModule, RouterNavigationService, ToggleBusyS
 import { RoomModule } from '@room.module';
 import { AuthenticatedUserService, InteractiveUserAuthGuardService } from '@security.module';
 import { BusyServiceInjectionToken, LoggingServiceInjectionToken, NavigationServiceInjectionToken,
-   UserAuthGuardServiceInjectionToken, UserServiceInjectionToken } from '@shared.module';
+   UserAuthGuardServiceInjectionToken, UserServiceInjectionToken, SharedModule } from '@shared.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';

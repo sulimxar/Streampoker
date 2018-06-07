@@ -25,7 +25,10 @@
                        name="roomKey"
                        required
                        minlength="5"
-                       autofocus>
+                       maxlength="5"
+                       autofocus
+                       [(ngModel)]="keyValue"
+                       appRestrictInput="^[a-zA-Z0-9]*$">
               </div>
             </div>
             <div class="p-2 ml-auto">
