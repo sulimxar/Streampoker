@@ -1,6 +1,5 @@
+import { Component, Inject, OnInit } from '@angular/core';
 import { NavigationService, NavigationServiceInjectionToken } from '@shared.module';
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
-import { ValueEventRegistration } from '@firebase/database/dist/esm/src/core/view/EventRegistration';
 
 @Component({
   selector: 'app-home',
@@ -13,15 +12,14 @@ export class HomeComponent implements OnInit {
 
   constructor(
     @Inject(NavigationServiceInjectionToken)
-    private navigationService: NavigationService,
-    private ref: ChangeDetectorRef
+    private navigationService: NavigationService
   ) { }
 
   ngOnInit() {
   }
 
   goToRoom(formGoToRoom) {
-    console.log(formGoToRoom);
+    this.navigationService.navigateToRoom(formGoToRoom.roomKey);
   }
 
   newRoom() {
