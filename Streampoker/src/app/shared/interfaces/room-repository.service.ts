@@ -4,4 +4,5 @@ import { Observable } from 'rxjs/Observable';
 // tslint:disable-next-line:no-empty-interface
 export interface RoomRepositoryService {
     addRoom(ownerId: string, key: string, name: string): Promise<string>;
+    getRoom(roomKey: string): Observable<Room>;
 }

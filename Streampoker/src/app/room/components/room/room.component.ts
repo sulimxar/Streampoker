@@ -1,9 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BusyService, BusyServiceInjectionToken, NavigationService, NavigationServiceInjectionToken,
-  RoomService, RoomServiceInjectionToken, UserService, UserServiceInjectionToken
+  RoomService, RoomServiceInjectionToken, UserService, UserServiceInjectionToken, Room, AppUser
 } from '@shared.module';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-room',
@@ -13,6 +16,8 @@ import {
 export class RoomComponent implements OnInit {
 
   roomKey: string;
+  room$: Observable<Room>;
+  appUser: AppUser;
 
   constructor(
     @Inject(UserServiceInjectionToken)
@@ -29,6 +34,15 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.busyService.setBusy(true);
+    this.room$ = this.roomService.getRoom(this.roomKey);
+
+    this.userService.appUser$.take(1).subscribe(u => {
+      this.appUser = u;
+      this.room$.take(1).subscribe(r => {
+        this.busyService.setBusy(false);
+      });
+    });
   }
 
 }

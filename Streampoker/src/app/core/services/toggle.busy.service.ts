@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { BusyService } from '@shared.module';
+import { BusyService, UiHelper } from '@shared.module';
 
 
 @Injectable()
@@ -16,6 +16,6 @@ export class ToggleBusyService implements BusyService {
   }
 
   setBusy(isBusy: boolean): void {
-    this.isBusySubject.next(isBusy);
+    UiHelper.RunAsync(() => this.isBusySubject.next(isBusy));
   }
 }

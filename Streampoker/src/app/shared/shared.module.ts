@@ -23,6 +23,7 @@ export { Room } from './models/room';
 // Classes
 
 export { Guid } from './utils/guid';
+export { UiHelper } from './utils/uiHelper';
 
 // Interfaces
 

@@ -21,7 +21,7 @@ import { RoomHeaderComponent } from './components/room-header/room-header.compon
     RouterModule.forChild([
       { path: '', component: HomeComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
       { path: 'new-room', component: NewRoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
-      { path: 'room/:key', component: RoomComponent }
+      { path: 'room/:key', component: RoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] }
     ])
   ],
   declarations: [

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AppUser, Room } from '@shared.module';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-room-header',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./room-header.component.scss']
 })
 export class RoomHeaderComponent implements OnInit {
+
+  @Input() appUser: AppUser;
+  @Input() room: Room;
 
   constructor() { }
 

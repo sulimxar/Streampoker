@@ -1,6 +1,7 @@
+import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject } from '@angular/core';
 import { RoomService, RoomRepositoryServiceInjectionToken, RoomRepositoryService, 
-  UserServiceInjectionToken, UserService } from '@shared.module';
+  UserServiceInjectionToken, UserService, Room } from '@shared.module';
 import { Guid } from '@shared.module';
 
 @Injectable()
@@ -24,6 +25,10 @@ export class BasicRoomService implements RoomService {
     const roomKey = this.generateRoomKey();
 
     return this.roomRepositoryService.addRoom(ownerId, roomKey, roomName).then<string>(uid => roomKey);
+  }
+
+  getRoom(roomKey: string): Observable<Room> {
+    return this.roomRepositoryService.getRoom(roomKey);
   }
 
   private generateRoomKey(): string {
