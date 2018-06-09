@@ -1,7 +1,9 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject } from '@angular/core';
-import { RoomService, RoomRepositoryServiceInjectionToken, RoomRepositoryService, 
-  UserServiceInjectionToken, UserService, Room } from '@shared.module';
+import {
+  RoomService, RoomRepositoryServiceInjectionToken, RoomRepositoryService,
+  UserServiceInjectionToken, UserService, Room
+} from '@shared.module';
 import { Guid } from '@shared.module';
 
 @Injectable()
@@ -28,7 +30,15 @@ export class BasicRoomService implements RoomService {
   }
 
   getRoom(roomKey: string): Observable<Room> {
-    return this.roomRepositoryService.getRoom(roomKey);
+    const rooms = this.roomRepositoryService.getRoom(roomKey);
+
+    rooms.forEach(room => {
+      room.guests = room.guests.filter(v => {
+        return (Date.now() - (v.ping as number)) < 5000;
+      });
+    });
+
+    return rooms;
   }
 
   private generateRoomKey(): string {

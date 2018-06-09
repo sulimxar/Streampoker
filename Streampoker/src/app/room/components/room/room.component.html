@@ -7,3 +7,16 @@
   <br/> room: {{room$ | async | json}}
 
 </p>
+
+<div *ngIf="room$ | async as room">
+  <div *ngIf="appUser">
+    <div *ngIf="appUser.uid === room.ownerId; else elseBlock">
+      <app-room-admin [appUser]="appUser"
+                      [room]="room"></app-room-admin>
+    </div>
+    <ng-template #elseBlock>
+      <app-room-guest [appUser]="appUser"
+                      [room]="room"></app-room-guest>
+    </ng-template>
+  </div>
+</div>

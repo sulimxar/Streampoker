@@ -1,3 +1,4 @@
+import { UiHelper } from './utils/uiHelper';
 import { NavigationService } from './interfaces/navigation.service';
 import { CommonModule } from '@angular/common';
 import { InjectionToken, NgModule } from '@angular/core';
@@ -19,6 +20,7 @@ import { RestrictInputDirective } from './utils/restrict-input.directive';
 
 export { AppUser } from './models/appUser';
 export { Room } from './models/room';
+export { Guest } from './models/guest';
 
 // Classes
 
