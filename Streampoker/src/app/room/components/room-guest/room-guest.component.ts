@@ -21,7 +21,7 @@ export class RoomGuestComponent implements OnInit, OnDestroy {
     private roomService: RoomService) { }
 
   ngOnInit() {
-    const timer = Observable.timer(2000, 2000);
+    const timer = Observable.timer(10, 2000);
     this.pingSubscription = timer.subscribe(t => this.pingGuest());
   }
 
@@ -29,8 +29,8 @@ export class RoomGuestComponent implements OnInit, OnDestroy {
     this.pingSubscription.unsubscribe();
   }
 
-  pingGuest() {
-    console.log('Pinging guest for room ', this.appUser.uid, this.room.uid);
+  private pingGuest() {
+    this.roomService.pingGuest(this.appUser, this.room);
   }
 
 }

@@ -2,12 +2,14 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject } from '@angular/core';
 import {
   RoomService, RoomRepositoryServiceInjectionToken, RoomRepositoryService,
-  UserServiceInjectionToken, UserService, Room
+  UserServiceInjectionToken, UserService, Room, Guest, AppUser
 } from '@shared.module';
 import { Guid } from '@shared.module';
 
 @Injectable()
 export class BasicRoomService implements RoomService {
+
+  private static readonly guestExpirationTimeout = 5000;
 
   constructor(
     @Inject(RoomRepositoryServiceInjectionToken)
@@ -30,15 +32,29 @@ export class BasicRoomService implements RoomService {
   }
 
   getRoom(roomKey: string): Observable<Room> {
-    const rooms = this.roomRepositoryService.getRoom(roomKey);
+    let rooms = this.roomRepositoryService.getRoomByKey(roomKey);
 
-    rooms.forEach(room => {
+    rooms = rooms.map(room => {
       room.guests = room.guests.filter(v => {
-        return (Date.now() - (v.ping as number)) < 5000;
+        return (Date.now() - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;
       });
+      return room;
     });
 
     return rooms;
+  }
+
+  pingGuest(user: AppUser, room: Room): void {
+    let guest = room.guests.find(g => g.uid === user.uid);
+
+    if (guest) {
+      guest.ping = Date.now();
+    } else {
+      guest = new Guest(user.uid, user.loginName, '?', Date.now());
+      this.roomRepositoryService.updateRoomGuest(guest, room.uid);
+    }
+
+    this.roomRepositoryService.updateRoomGuestPing(guest, room.uid);
   }
 
   private generateRoomKey(): string {
