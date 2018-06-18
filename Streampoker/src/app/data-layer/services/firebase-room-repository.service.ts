@@ -45,6 +45,20 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
       );
   }
 
+  getRoomsByOwner(ownerId: string): Observable<Room[]> {
+    return this.db.list('/rooms', ref => ref.orderByChild('ownerId').equalTo(ownerId))
+      .snapshotChanges().map(
+        list => {
+          return list.map(r => {
+            const snapshot = r as AngularFireAction<DataSnapshot>;
+            const roomId = snapshot.payload.key;
+            const room = snapshot.payload.val();
+            return this.convertFirebaseRoom(roomId, room);
+          });
+        }
+      );
+  }
+
   updateRoomGuest(guest: Guest, roomId: string): void {
     this.updateRoomGuestPartially(guest.uid, roomId, {
       name: guest.name,

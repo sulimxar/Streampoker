@@ -32,16 +32,20 @@ export class BasicRoomService implements RoomService {
   }
 
   getRoom(roomKey: string): Observable<Room> {
-    let rooms = this.roomRepositoryService.getRoomByKey(roomKey);
+    let room$ = this.roomRepositoryService.getRoomByKey(roomKey);
 
-    rooms = rooms.map(room => {
+    room$ = room$.map(room => {
       room.guests = room.guests.filter(v => {
         return (Date.now() - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;
       });
       return room;
     });
 
-    return rooms;
+    return room$;
+  }
+
+  getRoomsByOwner(ownerId: string): Observable<Room[]> {
+    return this.roomRepositoryService.getRoomsByOwner(ownerId);
   }
 
   pingGuest(user: AppUser, room: Room): void {
