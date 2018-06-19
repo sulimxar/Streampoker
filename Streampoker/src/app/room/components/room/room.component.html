@@ -10,11 +10,11 @@
 
 <div *ngIf="room$ | async as room">
   <div *ngIf="appUser">
-    <div *ngIf="appUser.uid === room.ownerId; else elseBlock">
+    <div *ngIf="appUser.uid === room.ownerId; else guestView">
       <app-room-admin [appUser]="appUser"
                       [room]="room"></app-room-admin>
     </div>
-    <ng-template #elseBlock>
+    <ng-template #guestView>
       <app-room-guest [appUser]="appUser"
                       [room]="room"></app-room-guest>
     </ng-template>

@@ -35,14 +35,13 @@ export class HomeComponent implements OnInit {
       this.appUser = u;
       this.rooms$ = this.roomService.getRoomsByOwner(this.appUser.uid);
       this.rooms$.take(1).subscribe(r => {
-        console.log('rooms received: ', r);
         this.busyService.setBusy(false);
       });
     });
   }
 
-  goToRoom(formGoToRoom) {
-    this.navigationService.navigateToRoom(formGoToRoom.roomKey);
+  goToRoom(roomKey) {
+    this.navigationService.navigateToRoom(roomKey);
   }
 
   newRoom() {

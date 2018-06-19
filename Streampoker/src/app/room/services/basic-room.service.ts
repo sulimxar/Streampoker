@@ -34,18 +34,14 @@ export class BasicRoomService implements RoomService {
   getRoom(roomKey: string): Observable<Room> {
     let room$ = this.roomRepositoryService.getRoomByKey(roomKey);
 
-    room$ = room$.map(room => {
-      room.guests = room.guests.filter(v => {
-        return (Date.now() - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;
-      });
-      return room;
-    });
+    room$ = room$.map(room => this.filterAliveGuests(room));
 
     return room$;
   }
 
   getRoomsByOwner(ownerId: string): Observable<Room[]> {
-    return this.roomRepositoryService.getRoomsByOwner(ownerId);
+    return this.roomRepositoryService.getRoomsByOwner(ownerId).map(rooms => 
+      rooms.map(room => this.filterAliveGuests(room)));
   }
 
   pingGuest(user: AppUser, room: Room): void {
@@ -59,6 +55,13 @@ export class BasicRoomService implements RoomService {
     }
 
     this.roomRepositoryService.updateRoomGuestPing(guest, room.uid);
+  }
+
+  private filterAliveGuests(room: Room): Room {
+    room.guests = room.guests.filter(v => {
+      return (Date.now() - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;
+    });
+    return room;
   }
 
   private generateRoomKey(): string {

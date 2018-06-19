@@ -10,6 +10,19 @@ html, body {
     font-size: smaller;
 }
 
+.text-size-95 {
+    font-size: 95%;
+}
+
+.text-cut-no-wrap {
+    white-space: nowrap; 
+    overflow:hidden
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .debug-box {
     background-color: bisque;
     border-style: solid;
