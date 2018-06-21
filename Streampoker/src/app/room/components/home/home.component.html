@@ -26,7 +26,6 @@
                        required
                        minlength="5"
                        maxlength="5"
-                       
                        [(ngModel)]="keyValue"
                        appRestrictInput="^[a-zA-Z0-9]*$">
               </div>
@@ -56,7 +55,7 @@
       </div>
     </fieldset>
   </form>
-  <div class="row mt-4">
+  <div class="row mt-5">
     <div class="home-row text-center">
       <h6>Your Rooms:</h6>
 
@@ -67,17 +66,18 @@
       </div>
 
       <ng-template #listView>
-        <ul class="list-group mt-3">
-          <button class="list-group-item list-group-item-action text-left text-cut-no-wrap cursor-pointer"
-             *ngFor="let room of rooms$ | async"
-             (click)="goToRoom(room.key)">
+        <ul class="list-group mt-3 mb-2">
+          <button class="list-group-item list-group-item-action text-left text-cut-no-wrap 
+                         cursor-pointer border-right-0 border-left-0 border-top-0 border-bottom-0"
+                  *ngFor="let room of rooms$ | async"
+                  (click)="goToRoom(room.key)">
 
             <span class="text-muted text-smaller">
-              <i class="fa fa-key"></i>
+              <i class="fa fa-key" style="opacity: 0.5;"></i>
               {{room.key}}
             </span>
             <span class="text-muted text-smaller ml-1">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-user" style="opacity: 0.5;"></i>
               ({{room.guests.length}}) |
             </span>
             <span class="text-primary ml-2 text-size-95">
