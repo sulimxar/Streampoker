@@ -8,3 +8,15 @@
     @extend .col-xl-5;
     @extend .m-auto
 }
+
+.list-group button:nth-child(1) {
+    border-top: 0 none;
+}
+
+.list-group button:last-child {
+    border-bottom: 0 none;
+}
+
+.list-group button {
+    overflow: hidden;
+}

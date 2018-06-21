@@ -16,11 +16,15 @@ html, body {
 
 .text-cut-no-wrap {
     white-space: nowrap; 
-    overflow:hidden
+    overflow:hidden;
 }
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.opacity-50 {
+    opacity: 0.5;
 }
 
 .debug-box {
