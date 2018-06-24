@@ -31,6 +31,9 @@
       ],
       "@room.module": [
         "app/room/room.module"
+      ],
+      "ngx-clipboard": [
+        "node_modules/ngx-clipboard"
       ]
     }
   }

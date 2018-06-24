@@ -12,10 +12,12 @@ import { BasicRoomService } from './services/basic-room.service';
 import { RoomGuestComponent } from './components/room-guest/room-guest.component';
 import { RoomAdminComponent } from './components/room-admin/room-admin.component';
 import { RoomHeaderComponent } from './components/room-header/room-header.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
   imports: [
     SharedModule,
+    ClipboardModule,
     CommonModule,
     FormsModule,
     RouterModule.forChild([
