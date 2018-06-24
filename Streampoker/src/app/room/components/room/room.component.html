@@ -1,14 +1,14 @@
 <app-room-header [appUser]="appUser"
                  [room]="room$ | async"></app-room-header>
 
-<p>
+<!-- <p>
   room works: {{roomKey}}
   <br/> user: {{appUser | json}}
   <br/> room: {{room$ | async | json}}
 
-</p>
+</p> -->
 
-<div *ngIf="room$ | async as room">
+<div *ngIf="room$ | async as room" class="mt-3">
   <div *ngIf="appUser">
     <div *ngIf="appUser.uid === room.ownerId; else guestView">
       <app-room-admin [appUser]="appUser"
