@@ -73,8 +73,18 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
     });
   }
 
+  updateRoomPing(ping: number, roomId: string): void {
+    this.updateRoomPartially(roomId, {
+      ping: ping
+    });
+  }
+
   private updateRoomGuestPartially(guestId: string, roomId: string, properties: {}): void {
     this.db.object('/rooms/' + roomId + '/guests/' + guestId).update(properties);
+  }
+
+  private updateRoomPartially(roomId: string, properties: {}): void {
+    this.db.object('/rooms/' + roomId).update(properties);
   }
 
   private convertFirebaseRoom(roomId: string, room: any): Room {
@@ -86,6 +96,6 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
           return new Guest(g.uid, g.name, g.mark, g.ping);
         });
     }
-    return new Room(room.ownerId, roomId, room.key, room.name, guests);
+    return new Room(room.ownerId, roomId, room.key, room.name, room.ping, guests);
   }
 }

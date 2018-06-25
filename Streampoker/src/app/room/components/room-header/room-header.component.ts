@@ -1,5 +1,6 @@
-import { AppUser, Room } from '@shared.module';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { AppUser, NavigationService, NavigationServiceInjectionToken, Room } from '@shared.module';
+
 
 @Component({
   selector: 'app-room-header',
@@ -15,10 +16,15 @@ export class RoomHeaderComponent implements OnInit {
   isKeyCopied: boolean;
   isUriCopied: boolean;
 
-  constructor() { }
+  constructor(
+    @Inject(NavigationServiceInjectionToken)
+    private navigationService: NavigationService
+  ) {
+    
+  }
 
   ngOnInit() {
-    this.roomUri = 'http:';
+    this.roomUri = this.navigationService.getCurrentUri();
   }
 
   onLinkModalOpened() {

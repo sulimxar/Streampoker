@@ -57,6 +57,10 @@ export class BasicRoomService implements RoomService {
     this.roomRepositoryService.updateRoomGuestPing(guest, room.uid);
   }
 
+  pingRoom(roomId: string): void {
+    this.roomRepositoryService.updateRoomPing(Date.now(), roomId);
+  }
+
   private filterAliveGuests(room: Room): Room {
     room.guests = room.guests.filter(v => {
       return (Date.now() - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;

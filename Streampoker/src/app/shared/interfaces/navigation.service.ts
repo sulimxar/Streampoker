@@ -5,4 +5,5 @@ export interface NavigationService {
     navigateToRoom(roomKey: string): void;
     returnFromLogin(): void;
     reloadCurrentLocation(): void;
+    getCurrentUri(): string;
 }

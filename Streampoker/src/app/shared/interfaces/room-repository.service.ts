@@ -8,4 +8,5 @@ export interface RoomRepositoryService {
     getRoomsByOwner(ownerId: string): Observable<Room[]>;
     updateRoomGuest(guest: Guest, roomId: string): void;
     updateRoomGuestPing(guest: Guest, roomId: string): void;
+    updateRoomPing(ping: number, roomId: string): void;
 }

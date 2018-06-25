@@ -32,5 +32,4 @@ export class RoomGuestComponent implements OnInit, OnDestroy {
   private pingGuest() {
     this.roomService.pingGuest(this.appUser, this.room);
   }
-
 }
