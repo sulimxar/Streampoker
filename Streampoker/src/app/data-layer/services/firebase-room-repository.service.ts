@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RoomRepositoryService, Room, Guest } from '@shared.module';
+import { RoomRepositoryService, Room, Guest, Mark, History } from '@shared.module';
 import { AngularFireDatabase, AngularFireAction } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { TagPlaceholder } from '@angular/compiler/src/i18n/i18n_ast';
@@ -96,6 +96,21 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
           return new Guest(g.uid, g.name, g.mark, g.ping);
         });
     }
-    return new Room(room.ownerId, roomId, room.key, room.name, room.ping, guests);
+
+    let history: History = null;
+    if (room.history) {
+      let marks: Mark[] = [];
+
+      if (room.history.marks) {
+        marks = (room.history.marks as any[])
+        .map(m => {
+          return new Mark(m.uid, m.name, m.value);
+        });
+      }
+
+      history = new History(room.History.Summary, marks);
+    }
+
+    return new Room(room.ownerId, roomId, room.key, room.name, room.ping, guests, history);
   }
 }

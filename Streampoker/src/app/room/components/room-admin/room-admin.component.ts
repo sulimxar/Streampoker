@@ -21,7 +21,6 @@ export class RoomAdminComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log('Admin componenty loaded');
     const timer = Observable.timer(10, 2000);
     this.pingSubscription = timer.subscribe(t => this.pingAdmin());
   }

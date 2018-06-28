@@ -1,0 +1,24 @@
+<div *ngIf="room?.guests.length === 0; else guestsView" class="text-center">
+  <p class="mt-3 text-muted text-smaller mt-5">
+    No guests yet.
+    <br> Invite some people to your room:
+  </p>
+
+  <app-room-share [room]="room"
+                  buttonStyle="btn-lg btn-light bg-white text-primary"
+                  class="d-block mt-4">
+  </app-room-share>
+</div>
+
+<ng-template #guestsView>
+  <ul class="list-group mt-0 mb-2">
+    <div class="list-group-item list-group-item-action text-left text-cut-no-wrap 
+                     cursor-pointer border-right-0 border-left-0 py-2 pl-2"
+         *ngFor="let guest of room?.guests">
+
+      <span class="text-primary">
+        {{guest.name}}
+      </span>
+    </div>
+  </ul>
+</ng-template>

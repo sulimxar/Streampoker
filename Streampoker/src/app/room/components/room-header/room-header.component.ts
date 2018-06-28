@@ -12,23 +12,9 @@ export class RoomHeaderComponent implements OnInit {
   @Input() appUser: AppUser;
   @Input() room: Room;
 
-  roomUri: string;
-  isKeyCopied: boolean;
-  isUriCopied: boolean;
-
-  constructor(
-    @Inject(NavigationServiceInjectionToken)
-    private navigationService: NavigationService
-  ) {
-    
+  constructor() {
   }
 
   ngOnInit() {
-    this.roomUri = this.navigationService.getCurrentUri();
-  }
-
-  onLinkModalOpened() {
-    this.isKeyCopied = false;
-    this.isUriCopied = false;
   }
 }

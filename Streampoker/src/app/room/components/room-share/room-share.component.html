@@ -1,0 +1,89 @@
+<button class="btn {{buttonStyle}} "
+        data-toggle="modal"
+        data-target="#linkModal"
+        (click)="onLinkModalOpened()">
+  <i class="fa fa-share-alt"></i>
+</button>
+
+<!-- MODAL -->
+<div class="modal fade"
+     id="linkModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="linkModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="linkModalLabel">
+          <i class="fa fa-share-alt text-smaller mr-2"></i>
+          <!-- Share the Room -->
+          Invite People
+        </h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group my-1">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-key"></i>
+            </div>
+          </div>
+          <input type="text"
+                 class="form-control"
+                 id="inputRoomKey"
+                 #inputRoomKey
+                 name="roomKey"
+                 readonly
+                 value="{{room?.key}}">
+          <div class="input-group-append">
+            <button class="btn btn-secondary "
+                    type="button"
+                    [ngxClipboard]="inputRoomKey"
+                    (cbOnSuccess)="isKeyCopied = true; isUriCopied = false;"
+                    [class.btn-success]="isKeyCopied">
+              <i class="far fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="input-group my-1 mt-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-link"></i>
+            </div>
+          </div>
+          <input type="text"
+                 class="form-control"
+                 id="inputRoomUri"
+                 #inputRoomUri
+                 name="roomUri"
+                 readonly
+                 value="{{roomUri}}">
+          <div class="input-group-append">
+            <button class="btn btn-secondary "
+                    type="button"
+                    [ngxClipboard]="inputRoomUri"
+                    (cbOnSuccess)="isKeyCopied = false; isUriCopied = true;"
+                    [class.btn-success]="isUriCopied">
+              <i class="far fa-copy"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-primary"
+                data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

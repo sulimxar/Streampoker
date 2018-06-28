@@ -1,3 +1,14 @@
-<p>
-  room-admin works!
-</p>
+<div class="component">
+  <div class="row">
+    <div [class.col-sm-6]="room?.history"
+         [class.col-12]="!room?.history">
+      <app-room-dashboard [appUser]="appUser"
+                          [room]="room"></app-room-dashboard>
+    </div>
+    <div *ngIf="room?.history"
+         [class.col-sm-6]="room?.history">
+      <app-room-history [appUser]="appUser"
+                        [room]="room"></app-room-history>
+    </div>
+  </div>
+</div>

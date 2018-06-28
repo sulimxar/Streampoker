@@ -13,6 +13,9 @@ import { RoomGuestComponent } from './components/room-guest/room-guest.component
 import { RoomAdminComponent } from './components/room-admin/room-admin.component';
 import { RoomHeaderComponent } from './components/room-header/room-header.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { RoomDashboardComponent } from './components/room-dashboard/room-dashboard.component';
+import { RoomHistoryComponent } from './components/room-history/room-history.component';
+import { RoomShareComponent } from './components/room-share/room-share.component';
 
 @NgModule({
   imports: [
@@ -32,7 +35,10 @@ import { ClipboardModule } from 'ngx-clipboard';
     NewRoomComponent,
     RoomGuestComponent,
     RoomAdminComponent,
-    RoomHeaderComponent
+    RoomHeaderComponent,
+    RoomDashboardComponent,
+    RoomHistoryComponent,
+    RoomShareComponent
   ],
   providers: [
     {
