@@ -1,4 +1,4 @@
-import { Room, Guest } from '@shared.module';
+import { Room, Guest, History } from '@shared.module';
 import { Observable } from 'rxjs/Observable';
 
 export interface RoomRepositoryService {
@@ -8,5 +8,8 @@ export interface RoomRepositoryService {
     getRoomsByOwner(ownerId: string): Observable<Room[]>;
     updateRoomGuest(guest: Guest, roomId: string): void;
     updateRoomGuestPing(guest: Guest, roomId: string): void;
+    updateRoomGuestMark(roomId: string, guestId: string, mark: string);
     updateRoomPing(ping: number, roomId: string): void;
+    addHistory(roomId: string, history: History): void;
+    setSnapshot(roomId: string, history: History): void;
 }

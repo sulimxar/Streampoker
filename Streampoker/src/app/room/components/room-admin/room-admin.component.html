@@ -1,12 +1,12 @@
 <div class="component">
   <div class="row">
-    <div [class.col-sm-6]="room?.history"
-         [class.col-12]="!room?.history">
+    <div [class.col-sm-6]="room?.history.length > 0"
+         [class.col-12]="room?.history.length === 0">
       <app-room-dashboard [appUser]="appUser"
                           [room]="room"></app-room-dashboard>
     </div>
-    <div *ngIf="room?.history"
-         [class.col-sm-6]="room?.history">
+    <div *ngIf="room?.history.length > 0"
+         [class.col-sm-6]="room?.history.length > 0">
       <app-room-history [appUser]="appUser"
                         [room]="room"></app-room-history>
     </div>

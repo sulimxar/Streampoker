@@ -2,14 +2,14 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject } from '@angular/core';
 import {
   RoomService, RoomRepositoryServiceInjectionToken, RoomRepositoryService,
-  UserServiceInjectionToken, UserService, Room, Guest, AppUser
+  UserServiceInjectionToken, UserService, Room, Guest, AppUser, History
 } from '@shared.module';
 import { Guid } from '@shared.module';
 
 @Injectable()
 export class BasicRoomService implements RoomService {
 
-  private static readonly guestExpirationTimeout = 5000;
+  private static readonly guestExpirationTimeout = 8000;
 
   constructor(
     @Inject(RoomRepositoryServiceInjectionToken)
@@ -51,14 +51,25 @@ export class BasicRoomService implements RoomService {
       guest.ping = Date.now();
     } else {
       guest = new Guest(user.uid, user.loginName, '?', Date.now());
-      this.roomRepositoryService.updateRoomGuest(guest, room.uid);
     }
 
     this.roomRepositoryService.updateRoomGuestPing(guest, room.uid);
   }
 
+  resetGuest(room: Room, guest: Guest): void {
+    this.roomRepositoryService.updateRoomGuestMark(room.uid, guest.uid, '?');
+  }
+
   pingRoom(roomId: string): void {
     this.roomRepositoryService.updateRoomPing(Date.now(), roomId);
+  }
+
+  addHistory(roomId: string, history: History): void {
+    this.roomRepositoryService.addHistory(roomId, history);
+  }
+
+  setSnapshot(roomId: string, history: History): void {
+    this.roomRepositoryService.setSnapshot(roomId, history);
   }
 
   private filterAliveGuests(room: Room): Room {

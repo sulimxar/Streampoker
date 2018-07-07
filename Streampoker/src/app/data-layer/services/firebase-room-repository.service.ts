@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { TagPlaceholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { DataSnapshot } from '@firebase/database-types';
 import { HttpRequest } from 'selenium-webdriver/http';
+import { forEach } from '@firebase/util';
 
 @Injectable()
 export class FirebaseRoomRepositoryService implements RoomRepositoryService {
@@ -73,10 +74,41 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
     });
   }
 
+  updateRoomGuestMark(roomId: string, guestId: string, mark: string): void {
+    this.updateRoomGuestPartially(guestId, roomId, {
+      mark: mark
+    });
+  }
+
   updateRoomPing(ping: number, roomId: string): void {
     this.updateRoomPartially(roomId, {
       ping: ping
     });
+  }
+
+  addHistory(roomId: string, history: History): void {
+    const properties = {
+      summary: history.summary,
+      marks: this.convertTypedMarksToFirebase(history.marks)
+    };
+
+    this.db.object('/rooms/' + roomId + '/history/' + history.dateTime).update(properties);
+  }
+
+  setSnapshot(roomId: string, snapshot: History): void {
+
+    if (snapshot === null) {
+      this.db.object('/rooms/' + roomId + '/snapshot').remove();
+      return;
+    }
+
+    const properties = {
+      dateTime: snapshot.dateTime,
+      summary: snapshot.summary,
+      marks: this.convertTypedMarksToFirebase(snapshot.marks)
+    };
+
+    this.db.object('/rooms/' + roomId + '/snapshot').update(properties);
   }
 
   private updateRoomGuestPartially(guestId: string, roomId: string, properties: {}): void {
@@ -93,24 +125,52 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
       guests = Object.keys(room.guests as any[])
         .map(userId => {
           const g = room.guests[userId];
-          return new Guest(g.uid, g.name, g.mark, g.ping);
+          return new Guest(userId, g.name, g.mark, g.ping);
         });
     }
 
-    let history: History = null;
+    let history: History[] = [];
     if (room.history) {
-      let marks: Mark[] = [];
 
-      if (room.history.marks) {
-        marks = (room.history.marks as any[])
-        .map(m => {
-          return new Mark(m.uid, m.name, m.value);
+      history = Object.keys(room.history as any[])
+        .map(historyTime => {
+          const h = room.history[historyTime];
+          const marks: Mark[] = this.convertFirebaseMarksToTyped(h.marks);
+
+          return new History(h.summary, parseInt(historyTime, null), marks);
         });
-      }
-
-      history = new History(room.History.Summary, marks);
     }
 
-    return new Room(room.ownerId, roomId, room.key, room.name, room.ping, guests, history);
+    let snapshot: History = null;
+    if (room.snapshot) {
+      const marks: Mark[] = this.convertFirebaseMarksToTyped(room.snapshot.marks);
+      snapshot = new History(room.snapshot.summary, parseInt(room.snapshot.dateTime, null), marks);
+    }
+
+
+    return new Room(room.ownerId, roomId, room.key, room.name, room.ping, guests, snapshot, history);
   }
+
+  private convertFirebaseMarksToTyped(marks: any): Mark[] {
+    let result: Mark[] = [];
+      if (marks) {
+        result = Object.keys(marks as any[])
+          .map(userId => {
+            const m = marks[userId];
+            return new Mark(userId, m.name, m.value);
+          });
+      }
+    return result;
+  }
+
+  private convertTypedMarksToFirebase(marks: Mark[]): {} {
+    const result = {};
+    marks.forEach(m => result[m.uid] = {
+      name: m.name,
+      value: m.value
+    });
+
+    return result;
+  }
+
 }

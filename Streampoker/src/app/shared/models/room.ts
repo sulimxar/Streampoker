@@ -8,15 +8,18 @@ export class Room {
     ownerId: string;
     ping: number;
     guests: Guest[];
-    history: History;
+    snapshot: History;
+    history: History[];
 
-    constructor (ownerId: string, uid: string, key: string, name: string, ping: number, guests: Guest[], history: History) {
+    constructor (ownerId: string, uid: string, key: string, name: string, ping: number, guests: Guest[], 
+                snapshot: History, history: History[]) {
         this.ownerId = ownerId;
         this.uid = uid;
         this.key = key;
         this.name = name;
         this.ping = ping;
         this.guests = guests;
+        this.snapshot = snapshot;
         this.history = history;
     }
 }
