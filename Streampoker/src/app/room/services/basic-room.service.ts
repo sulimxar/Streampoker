@@ -51,6 +51,7 @@ export class BasicRoomService implements RoomService {
       guest.ping = Date.now();
     } else {
       guest = new Guest(user.uid, user.loginName, '?', Date.now());
+      this.roomRepositoryService.updateRoomGuest(guest, room.uid);
     }
 
     this.roomRepositoryService.updateRoomGuestPing(guest, room.uid);
