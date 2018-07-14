@@ -1,3 +1,25 @@
-<p>
-  <!-- {{room | json}} -->
-</p>
+<h6 class="my-3">History</h6>
+
+<ul class="list-group">
+  <div class="list-group-item mb-2 border-top-0 border-right-0 border-left-0 border-0"
+       *ngFor="let history of room.history">
+    <span class="text-smaller">
+      {{history.dateTime | date:'medium'}}
+    </span>
+
+    <div class="d-flex mt-3 mb-2">
+      <div class="d-flex flex-wrap">
+        <div *ngFor="let mark of history.marks">
+          <div class="mr-2">
+            <app-mark-badge [name]="mark.name"
+                            [mark]="mark.value">
+            </app-mark-badge>
+          </div>
+        </div>
+      </div>
+      <div class="ml-auto">
+        <h1 class="display-4 text-muted ml-3 text-smaller mr-3" style="margin-top: -20px;">{{history.summary}}</h1>
+      </div>
+    </div>
+  </div>
+</ul>

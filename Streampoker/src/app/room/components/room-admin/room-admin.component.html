@@ -1,7 +1,8 @@
 <div class="component">
   <div class="row">
     <div [class.col-sm-6]="room?.history.length > 0"
-         [class.col-12]="room?.history.length === 0">
+         [class.col-12]="room?.history.length === 0"
+         class="mb-5">
       <app-room-dashboard [appUser]="appUser"
                           [room]="room"></app-room-dashboard>
     </div>
@@ -12,3 +13,4 @@
     </div>
   </div>
 </div>
+<!-- <app-mark-badge name="Boris" mark="5"></app-mark-badge> -->

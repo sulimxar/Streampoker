@@ -15,7 +15,9 @@ export class RoomGuestComponent implements OnInit, OnDestroy {
   @Input() room: Room;
   
   private pingSubscription: Subscription;
+  private pingSubscription2: Subscription;
 
+  now: number;
   constructor(
     @Inject(RoomServiceInjectionToken)
     private roomService: RoomService) { }
@@ -23,10 +25,14 @@ export class RoomGuestComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const timer = Observable.timer(10, 2000);
     this.pingSubscription = timer.subscribe(t => this.pingGuest());
+
+    const timer2 = Observable.timer(10, 100);
+    this.pingSubscription2 = timer2.subscribe(t => this.now = Date.now());
   }
 
   ngOnDestroy(): void {
     this.pingSubscription.unsubscribe();
+    this.pingSubscription2.unsubscribe();
   }
 
   private pingGuest() {

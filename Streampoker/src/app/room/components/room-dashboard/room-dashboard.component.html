@@ -12,7 +12,7 @@
 </div>
 
 <ng-template #guestsView>
-  <div class="container">
+  <div class="container px-0">
     <h6 class="my-3">Guests</h6>
     <ul class="list-group mt-0 mb-2">
       <div class="list-group-item text-left d-flex align-items-center 
@@ -62,14 +62,11 @@
         </button>
       </div>
       <ng-template #resultView>
-        <div class="bg-light p-2 d-block rounded border-top border-bottom ">
-          <h5 class="text-muted">
-            Result
-          </h5>
+        <div class="p-2 d-block rounded border-top ">
 
-          <div class="border rounded-circle d-flex justify-content-center align-items-center mx-auto bg-success"
-               style="width: 100px; height: 100px;">
-            <h1 class="display-2 text-white ">{{vote}}</h1>
+          <div class="d-flex justify-content-center align-items-center mx-auto mt-3 "
+               style="width: 100px; height: 150px;">
+            <h1 class="display-2  text-success">{{vote}}</h1>
           </div>
 
           <button class="btn btn-primary d-block mx-auto mt-4 mb-2"

@@ -16,6 +16,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { RoomDashboardComponent } from './components/room-dashboard/room-dashboard.component';
 import { RoomHistoryComponent } from './components/room-history/room-history.component';
 import { RoomShareComponent } from './components/room-share/room-share.component';
+import { MarkBadgeComponent } from './components/mark-badge/mark-badge.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { RoomShareComponent } from './components/room-share/room-share.component
     RoomHeaderComponent,
     RoomDashboardComponent,
     RoomHistoryComponent,
-    RoomShareComponent
+    RoomShareComponent,
+    MarkBadgeComponent
   ],
   providers: [
     {

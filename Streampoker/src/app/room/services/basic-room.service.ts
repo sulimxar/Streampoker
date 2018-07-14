@@ -9,7 +9,7 @@ import { Guid } from '@shared.module';
 @Injectable()
 export class BasicRoomService implements RoomService {
 
-  private static readonly guestExpirationTimeout = 8000;
+  private static readonly guestExpirationTimeout = 20000;
 
   constructor(
     @Inject(RoomRepositoryServiceInjectionToken)
