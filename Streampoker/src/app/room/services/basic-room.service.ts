@@ -61,6 +61,10 @@ export class BasicRoomService implements RoomService {
     this.roomRepositoryService.updateRoomGuestMark(room.uid, guest.uid, '?');
   }
 
+  voteGuest(room: Room, guest: Guest, mark: string): void {
+    this.roomRepositoryService.updateRoomGuestMark(room.uid, guest.uid, mark);
+  }
+
   pingRoom(roomId: string): void {
     this.roomRepositoryService.updateRoomPing(Date.now(), roomId);
   }

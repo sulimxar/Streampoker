@@ -7,6 +7,7 @@ export interface RoomService {
     getRoomsByOwner(ownerId: string): Observable<Room[]>;
     pingGuest(user: AppUser, room: Room): void;
     resetGuest(room: Room, guest: Guest): void;
+    voteGuest(room: Room, guest: Guest, mark: string): void;
     pingRoom(roomId: string): void;
     addHistory(roomId: string, history: History): void;
     setSnapshot(roomId: string, history: History): void;

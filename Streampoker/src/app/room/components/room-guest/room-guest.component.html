@@ -1,4 +1,67 @@
-<p>
-  room-guest works!
-</p>
-Now = {{now}}
+<div>
+  <div id="carouselControl"
+       #carouselControl
+       class="carousel slide"
+       data-interval="false">
+    <div class="carousel-inner">
+
+      <div class="carousel-item debug-box"
+           *ngFor="let card of cards let i = index"
+           [ngClass]="{'active' : i == selectedCarouselIndex}">
+        {{card}}hhj
+      </div>
+
+    </div>
+
+    <a class="carousel-control-prev"
+       href="#carouselControl"
+       role="button"
+       data-slide="prev">
+      <span class="carousel-control-prev-icon"
+            aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next"
+       href="#carouselControl"
+       role="button"
+       data-slide="next">
+      <span class="carousel-control-next-icon"
+            aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <div class="mt-4">
+    <div *ngIf="!isSummarized; else resultView">
+      <button class="btn btn-primary d-block mx-auto px-3"
+              (click)="onVoteClicked()">
+        <i class="far fa-check-circle mr-2"></i>
+        Vote!
+      </button>
+    </div>
+    <ng-template #resultView>
+      <div class="p-2 d-block rounded border-top ">
+        <div class="d-flex justify-content-center align-items-center mx-auto mt-3 "
+             style="width: 100px; height: 150px;">
+          <h1 class="display-2  text-success">5</h1>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="mt-4">
+    <h6 class="my-3">Guests</h6>
+    <div class="mb-2 border p-2">
+      <div class="d-flex mt-2 mb-2">
+        <div class="d-flex flex-wrap">
+          <div *ngFor="let guest of guests">
+            <div class="mr-2">
+              <app-mark-badge [name]="guest.name"
+                              [mark]="guest.mark">
+              </app-mark-badge>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
