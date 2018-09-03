@@ -3,8 +3,7 @@ import { AppUser, Room, RoomServiceInjectionToken, RoomService, Guest, History }
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/timer';
 import { Subscription } from 'rxjs/Subscription';
-//import * as $ from 'jquery';
-declare var $: JQueryStatic;
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-room-guest',
@@ -20,6 +19,8 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   private pingSubscription: Subscription;
   selectedCarouselIndex = 0;
+  initiallySelectedCarouselIndex = 0;
+
   //private pingSubscription2: Subscription;
 
   //now: number;
@@ -39,10 +40,10 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   ngAfterViewInit(): void {
+    // This used to work... once... and then suddenly stopped. No  idea why but I give up :(
     $(this.carouselControl.nativeElement).on('slid.bs.carousel', (e) => {
         this.selectedCarouselIndex = (e as any).to;
-        console.log(this);
-        console.log(this.selectedCarouselIndex);
+        console.log('Magic!', this.selectedCarouselIndex);
       });
   }
 
@@ -65,11 +66,28 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit  {
     return thisGuests && thisGuests.length > 0 ? thisGuests[0] : null;
   }
 
-  onVoteClicked() {
-    console.log(this.cards);
-    console.log(this.selectedCarouselIndex);
-    console.log(this.cards[this.selectedCarouselIndex]);
+  onPrevClicked() {
+    this.selectedCarouselIndex = this.getActiveCardIndex() - 1;
+    if (this.selectedCarouselIndex < 0) {
+      this.selectedCarouselIndex = this.cards.length - 1;
+    }
+  }
 
+  onNextClicked() {
+    this.selectedCarouselIndex = this.getActiveCardIndex() + 1;
+    if (this.selectedCarouselIndex >= this.cards.length) {
+      this.selectedCarouselIndex = 0;
+    }
+  }
+
+  private getActiveCardIndex() {
+    const prevActiveCardId = $('#' + this.carouselControl.nativeElement.id + ' .carousel-item.active')[0].id;
+    const prevActiveCardIndex = prevActiveCardId.substr('item-'.length);
+
+    return parseInt(prevActiveCardIndex, null);
+  }
+
+  onVoteClicked() {
     this.roomService.voteGuest(this.room, this.thisGuest, this.cards[this.selectedCarouselIndex]);
   }
 
