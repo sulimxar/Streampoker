@@ -50,7 +50,7 @@ export class BasicRoomService implements RoomService {
     if (guest) {
       guest.ping = Date.now();
     } else {
-      guest = new Guest(user.uid, user.loginName, '?', Date.now());
+      guest = new Guest(user.uid, user.loginName, ' ', Date.now());
       this.roomRepositoryService.updateRoomGuest(guest, room.uid);
     }
 
@@ -58,7 +58,7 @@ export class BasicRoomService implements RoomService {
   }
 
   resetGuest(room: Room, guest: Guest): void {
-    this.roomRepositoryService.updateRoomGuestMark(room.uid, guest.uid, '?');
+    this.roomRepositoryService.updateRoomGuestMark(room.uid, guest.uid, ' ');
   }
 
   voteGuest(room: Room, guest: Guest, mark: string): void {

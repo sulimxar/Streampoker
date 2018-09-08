@@ -56,6 +56,11 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit  {
     return this.snapshot !== undefined && this.snapshot !== null;
   }
 
+  get isVoted(): boolean {
+    const thisGuest = this.thisGuest;
+    return this.isSummarized || (thisGuest === null ? false : thisGuest.mark !== ' ');
+  }
+
   get guests(): Guest[] {
     return this.snapshot ? this.snapshot.marks.map(m => new Guest(m.uid, m.name, m.value, undefined)) :
       this.room ? this.room.guests : [];

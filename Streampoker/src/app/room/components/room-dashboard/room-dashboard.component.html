@@ -23,7 +23,7 @@
 
           <div *ngIf="isSummarized; else notSummarizedView"
                class="flex-item">
-            <h2 *ngIf="guest.mark === '?'; else markView"
+            <h2 *ngIf="guest.mark === ' '; else markView"
                 class="text-warning">
               <i class="far fa-question-circle mt-2"></i>
             </h2>
@@ -35,7 +35,7 @@
           </div>
           <ng-template #notSummarizedView>
             <div class="flex-item">
-              <h2 *ngIf="guest.mark === '?'; else checkView"
+              <h2 *ngIf="guest.mark === ' '; else checkView"
                   class="text-warning">
                 <i class="far fa-question-circle mt-2"></i>
               </h2>
