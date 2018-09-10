@@ -10,20 +10,34 @@ import * as $ from 'jquery';
   templateUrl: './room-guest.component.html',
   styleUrls: ['./room-guest.component.scss']
 })
-export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit  {
+export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @Input() appUser: AppUser;
   @Input() room: Room;
+  @Input('appUser')
+  set appUser(value: AppUser) {
+    this.cachedAppUser = value;
+
+    if (this.isVoted && this.thisGuest.mark !== ' ') {
+      this.initiallySelectedCarouselIndex = this.cards.indexOf(this.thisGuest.mark);
+    } else {
+      this.initiallySelectedCarouselIndex = 0;
+    }
+
+    this.selectedCarouselIndex = this.initiallySelectedCarouselIndex;
+  }
+  get appUser(): AppUser {
+    return this.cachedAppUser;
+  }
 
   @ViewChild('carouselControl') carouselControl: ElementRef;
 
+  private cachedAppUser: AppUser;
   private pingSubscription: Subscription;
+  private initiallySelectedCarouselIndex: number;
+
   selectedCarouselIndex = 0;
-  initiallySelectedCarouselIndex = 0;
 
   //private pingSubscription2: Subscription;
-
-  //now: number;
 
   cards: string[] = ['?', '0', '1', '2', '3', '5', '8', '13', '20', '40'];
 
@@ -42,9 +56,9 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit  {
   ngAfterViewInit(): void {
     // This used to work... once... and then suddenly stopped. No  idea why but I give up :(
     $(this.carouselControl.nativeElement).on('slid.bs.carousel', (e) => {
-        this.selectedCarouselIndex = (e as any).to;
-        console.log('Magic!', this.selectedCarouselIndex);
-      });
+      this.selectedCarouselIndex = (e as any).to;
+      console.log('Magic!', this.selectedCarouselIndex);
+    });
   }
 
   ngOnDestroy(): void {
@@ -94,6 +108,10 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   onVoteClicked() {
     this.roomService.voteGuest(this.room, this.thisGuest, this.cards[this.selectedCarouselIndex]);
+  }
+
+  onCancelClicked() {
+    this.roomService.voteGuest(this.room, this.thisGuest, ' ');
   }
 
   private get snapshot(): History {

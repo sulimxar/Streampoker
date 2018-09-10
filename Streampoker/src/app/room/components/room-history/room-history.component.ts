@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AppUser, Room } from '@shared.module';
+import { AppUser, Room, History } from '@shared.module';
 
 @Component({
   selector: 'app-room-history',
@@ -16,4 +16,11 @@ export class RoomHistoryComponent implements OnInit {
   ngOnInit() {
   }
 
+  get orderedHistory(): History[] {
+    if (this.room && this.room.history) {
+      return this.room.history.sort((a, b) => b.dateTime - a.dateTime);
+    }
+
+    return null;
+  }
 }

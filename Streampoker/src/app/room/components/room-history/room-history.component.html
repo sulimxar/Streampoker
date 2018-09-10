@@ -2,7 +2,7 @@
 
 <ul class="list-group">
   <div class="list-group-item mb-2 border-top-0 border-right-0 border-left-0 border-0"
-       *ngFor="let history of room.history">
+       *ngFor="let history of orderedHistory">
     <span class="text-smaller">
       {{history.dateTime | date:'medium'}}
     </span>
