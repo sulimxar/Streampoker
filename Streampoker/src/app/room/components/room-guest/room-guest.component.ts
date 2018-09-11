@@ -13,25 +13,11 @@ import * as $ from 'jquery';
 export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() room: Room;
-  @Input('appUser')
-  set appUser(value: AppUser) {
-    this.cachedAppUser = value;
-
-    if (this.isVoted && this.thisGuest.mark !== ' ') {
-      this.initiallySelectedCarouselIndex = this.cards.indexOf(this.thisGuest.mark);
-    } else {
-      this.initiallySelectedCarouselIndex = 0;
-    }
-
-    this.selectedCarouselIndex = this.initiallySelectedCarouselIndex;
-  }
-  get appUser(): AppUser {
-    return this.cachedAppUser;
-  }
+  @Input() appUser: AppUser;
 
   @ViewChild('carouselControl') carouselControl: ElementRef;
 
-  private cachedAppUser: AppUser;
+  //private cachedAppUser: AppUser;
   private pingSubscription: Subscription;
   private initiallySelectedCarouselIndex: number;
 
@@ -51,6 +37,21 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // const timer2 = Observable.timer(10, 100);
     // this.pingSubscription2 = timer2.subscribe(t => this.now = Date.now());
+
+    if (this.appUser && this.room) {
+      // It's assumed here for simplicity that appUser and room is always assigned when this control
+      // is initialized. Otherwise - crash.
+      if (this.isVoted && this.thisGuest.mark !== ' ') {
+        this.initiallySelectedCarouselIndex = this.cards.indexOf(this.thisGuest.mark);
+      } else {
+        this.initiallySelectedCarouselIndex = 0;
+      }
+
+      this.selectedCarouselIndex = this.initiallySelectedCarouselIndex;
+    } else {
+      throw new Error('Null reference exception:' +
+        this.appUser ? '' : 'appUser is null.' + this.room ? '' : ' room is null.');
+    }
   }
 
   ngAfterViewInit(): void {
