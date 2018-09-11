@@ -55,7 +55,7 @@ export class RoomDashboardComponent implements OnInit {
     let vote = '?';
 
     if (votedGuests.length > 0) {
-      vote = (votedGuests.reduce((sum, b) => sum + parseInt(b.mark, null), 0) / votedGuests.length).toString();
+      vote = Math.round(votedGuests.reduce((sum, b) => sum + parseInt(b.mark, null), 0) / votedGuests.length).toString();
     }
 
     this.snapshot = new History(vote, Date.now(), this.guests.map(g => new Mark(g.uid, g.name, g.mark)));

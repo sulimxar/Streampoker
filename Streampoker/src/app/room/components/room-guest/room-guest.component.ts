@@ -85,6 +85,10 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit {
     return thisGuests && thisGuests.length > 0 ? thisGuests[0] : null;
   }
 
+  get summary(): string {
+    return this.snapshot === null ? '?' : this.snapshot.summary;
+  }
+
   onPrevClicked() {
     this.selectedCarouselIndex = this.getActiveCardIndex() - 1;
     if (this.selectedCarouselIndex < 0) {
