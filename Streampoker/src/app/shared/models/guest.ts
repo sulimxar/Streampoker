@@ -9,7 +9,5 @@ export class Guest {
         this.name = name;
         this.mark = mark;
         this.ping = ping;
-
-        const date = Date.now();
     }
 }

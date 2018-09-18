@@ -1,5 +1,4 @@
 import { Mark } from './models/mark';
-import { UiHelper } from './utils/uiHelper';
 import { NavigationService } from './interfaces/navigation.service';
 import { CommonModule } from '@angular/common';
 import { InjectionToken, NgModule } from '@angular/core';
@@ -11,7 +10,7 @@ import { UserRepositoryService } from './interfaces/user-repository.service';
 import { RoomRepositoryService } from './interfaces/room-repository.service';
 import { UserAuthGuardService } from './interfaces/user-auth-guard.service';
 import { RoomService } from './interfaces/room.service';
-import { RestrictInputDirective } from './utils/restrict-input.directive';
+import { TimeService } from './interfaces/time.service';
 
 
 // ===================================  EXPORT
@@ -27,8 +26,7 @@ export { History } from './models/history';
 
 // Classes
 
-export { Guid } from './utils/guid';
-export { UiHelper } from './utils/uiHelper';
+
 
 // Interfaces
 
@@ -41,6 +39,7 @@ export type UserAuthGuardService = UserAuthGuardService;
 export type UserRepositoryService = UserRepositoryService;
 export type RoomRepositoryService = RoomRepositoryService;
 export type RoomService = RoomService;
+export type TimeService = TimeService;
 
 // Tokens
 
@@ -53,12 +52,12 @@ export const UserAuthGuardServiceInjectionToken = new InjectionToken<AuthService
 export const UserRepositoryServiceInjectionToken = new InjectionToken<UserRepositoryService>('UserRepositoryService');
 export const RoomRepositoryServiceInjectionToken = new InjectionToken<RoomRepositoryService>('RoomRepositoryService');
 export const RoomServiceInjectionToken = new InjectionToken<RoomService>('RoomService');
+export const TimeServiceInjectionToken = new InjectionToken<TimeService>('TimeService');
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [RestrictInputDirective],
-  exports: [RestrictInputDirective]
+  declarations: []
 })
 export class SharedModule { }

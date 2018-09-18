@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserAuthGuardServiceInjectionToken, RoomRepositoryServiceInjectionToken, 
-  RoomServiceInjectionToken, SharedModule } from '@shared.module';
+  RoomServiceInjectionToken, SharedModule, TimeServiceInjectionToken } from '@shared.module';
 import { HomeComponent } from './components/home/home.component';
 import { NewRoomComponent } from './components/new-room/new-room.component';
 import { RoomComponent } from './components/room/room.component';
@@ -17,6 +17,7 @@ import { RoomDashboardComponent } from './components/room-dashboard/room-dashboa
 import { RoomHistoryComponent } from './components/room-history/room-history.component';
 import { RoomShareComponent } from './components/room-share/room-share.component';
 import { MarkBadgeComponent } from './components/mark-badge/mark-badge.component';
+import { UtilsModule, ServerTimeService } from '@utils.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { MarkBadgeComponent } from './components/mark-badge/mark-badge.component
     ClipboardModule,
     CommonModule,
     FormsModule,
+    UtilsModule,
     RouterModule.forChild([
       { path: '', component: HomeComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
       { path: 'new-room', component: NewRoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
@@ -50,6 +52,10 @@ import { MarkBadgeComponent } from './components/mark-badge/mark-badge.component
     {
       provide: RoomServiceInjectionToken,
       useClass: BasicRoomService
+    },
+    {
+      provide: TimeServiceInjectionToken,
+      useClass: ServerTimeService
     }
   ]
 })

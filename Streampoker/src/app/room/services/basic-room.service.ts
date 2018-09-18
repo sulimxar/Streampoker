@@ -2,9 +2,9 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject } from '@angular/core';
 import {
   RoomService, RoomRepositoryServiceInjectionToken, RoomRepositoryService,
-  UserServiceInjectionToken, UserService, Room, Guest, AppUser, History
+  UserServiceInjectionToken, UserService, Room, Guest, AppUser, History, TimeService, TimeServiceInjectionToken
 } from '@shared.module';
-import { Guid } from '@shared.module';
+import { Guid } from '@utils.module';
 
 @Injectable()
 export class BasicRoomService implements RoomService {
@@ -16,6 +16,8 @@ export class BasicRoomService implements RoomService {
     private roomRepositoryService: RoomRepositoryService,
     @Inject(UserServiceInjectionToken)
     private userService: UserService,
+    @Inject(TimeServiceInjectionToken)
+    private timeService: TimeService,
   ) {
 
   }
@@ -48,9 +50,9 @@ export class BasicRoomService implements RoomService {
     let guest = room.guests.find(g => g.uid === user.uid);
 
     if (guest) {
-      guest.ping = Date.now();
+      guest.ping = this.timeService.now();
     } else {
-      guest = new Guest(user.uid, user.loginName, ' ', Date.now());
+      guest = new Guest(user.uid, user.loginName, ' ', this.timeService.now());
       this.roomRepositoryService.updateRoomGuest(guest, room.uid);
     }
 
@@ -66,7 +68,7 @@ export class BasicRoomService implements RoomService {
   }
 
   pingRoom(roomId: string): void {
-    this.roomRepositoryService.updateRoomPing(Date.now(), roomId);
+    this.roomRepositoryService.updateRoomPing(this.timeService.now(), roomId);
   }
 
   addHistory(roomId: string, history: History): void {
@@ -78,8 +80,9 @@ export class BasicRoomService implements RoomService {
   }
 
   private filterAliveGuests(room: Room): Room {
+    const now = this.timeService.now();
     room.guests = room.guests.filter(v => {
-      return (Date.now() - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;
+      return (now - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;
     });
     return room;
   }

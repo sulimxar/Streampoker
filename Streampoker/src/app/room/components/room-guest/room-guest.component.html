@@ -85,7 +85,7 @@
           <div *ngFor="let guest of guests">
             <div class="mr-2">
               <app-mark-badge [name]="guest.name"
-                              [mark]="thisGuest.uid === guest.uid ? guest.mark : isSummarized ? guest.mark : guest.mark === ' ' ? '?' : '[checked]'">
+                              [mark]="isSummarized ? guest.mark : guest.mark === ' ' ? '?' : '[checked]'">
               </app-mark-badge>
             </div>
           </div>
