@@ -24,8 +24,8 @@
           <div *ngIf="isSummarized; else notSummarizedView"
                class="flex-item">
             <h2 *ngIf="guest.mark === ' '; else markView"
-                class="text-warning">
-              <i class="far fa-question-circle mt-2"></i>
+                class="text-danger">
+              <i class="far fa-times-circle mt-2"></i>
             </h2>
             <ng-template #markView>
               <h1 class="text-success">

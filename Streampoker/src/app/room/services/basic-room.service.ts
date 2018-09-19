@@ -9,7 +9,7 @@ import { Guid } from '@utils.module';
 @Injectable()
 export class BasicRoomService implements RoomService {
 
-  private static readonly guestExpirationTimeout = 20000;
+  private static readonly guestExpirationTimeout = 10000;
 
   constructor(
     @Inject(RoomRepositoryServiceInjectionToken)
@@ -50,9 +50,9 @@ export class BasicRoomService implements RoomService {
     let guest = room.guests.find(g => g.uid === user.uid);
 
     if (guest) {
-      guest.ping = this.timeService.now();
+      guest.ping = room.ping;
     } else {
-      guest = new Guest(user.uid, user.loginName, ' ', this.timeService.now());
+      guest = new Guest(user.uid, user.loginName, ' ', room.ping);
       this.roomRepositoryService.updateRoomGuest(guest, room.uid);
     }
 
@@ -80,9 +80,9 @@ export class BasicRoomService implements RoomService {
   }
 
   private filterAliveGuests(room: Room): Room {
-    const now = this.timeService.now();
-    room.guests = room.guests.filter(v => {
-      return (now - (v.ping as number)) < BasicRoomService.guestExpirationTimeout;
+    const now = room.ping;
+    room.guests = room.guests.filter(g => {
+      return g.mark !== ' ' || (now - (g.ping as number)) < BasicRoomService.guestExpirationTimeout;
     });
     return room;
   }

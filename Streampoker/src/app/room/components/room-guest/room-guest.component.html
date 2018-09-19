@@ -19,6 +19,10 @@
               *ngIf="isVoted">
             <i class="far fa-check-circle mt-2"></i>
           </h1>
+          <h1 class="card-badge text-danger"
+              *ngIf="isSummarized && !isVoted">
+            <i class="far fa-times-circle mt-2"></i>
+          </h1>
         </div>
       </div>
 

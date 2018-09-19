@@ -41,7 +41,7 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.appUser && this.room) {
       // It's assumed here for simplicity that appUser and room is always assigned when this control
       // is initialized. Otherwise - crash.
-      if (this.isVoted && this.thisGuest.mark !== ' ') {
+      if (this.isVoted && this.thisGuest !== null && this.thisGuest.mark !== ' ') {
         this.initiallySelectedCarouselIndex = this.cards.indexOf(this.thisGuest.mark);
       } else {
         this.initiallySelectedCarouselIndex = 0;
@@ -73,7 +73,7 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get isVoted(): boolean {
     const thisGuest = this.thisGuest;
-    return this.isSummarized || (thisGuest === null ? false : thisGuest.mark !== ' ');
+    return /*this.isSummarized ||*/ (thisGuest === null ? false : thisGuest.mark !== ' ');
   }
 
   get guests(): Guest[] {
@@ -112,11 +112,17 @@ export class RoomGuestComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onVoteClicked() {
-    this.roomService.voteGuest(this.room, this.thisGuest, this.cards[this.selectedCarouselIndex]);
+    const thisGuest = this.thisGuest;
+    if (thisGuest !== null) {
+      this.roomService.voteGuest(this.room, this.thisGuest, this.cards[this.selectedCarouselIndex]);
+    }
   }
 
   onCancelClicked() {
-    this.roomService.voteGuest(this.room, this.thisGuest, ' ');
+    const thisGuest = this.thisGuest;
+    if (thisGuest !== null) {
+      this.roomService.voteGuest(this.room, this.thisGuest, ' ');
+    }
   }
 
   private get snapshot(): History {

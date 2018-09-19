@@ -1,13 +1,20 @@
-<div class="outer-container">
+<div class="outer-container mb-1">
   <div class="border rounded-circle d-flex justify-content-center align-items-center inner-container">
     <h6 class="text-muted ml-1, mt-1">{{abbreviation}}</h6>
   </div>
   <span class="badge badge-info"
-        *ngIf="mark !== '[checked]'">{{mark == ' ' ? '?' : mark}}</span>
+        *ngIf="mark !== '[checked]' && mark !== ' '">
+    {{mark}}
+  </span>
+
+  <span class="badge badge-checked text-warning"
+        *ngIf="mark !== '[checked]' && mark === ' '">
+    <i class="far fa-times-circle"></i>
+  </span>
+
   <span class="badge badge-checked text-success"
         *ngIf="mark === '[checked]'">
-    <i class="far fa-check-circle"
-       *ngIf="mark === '[checked]'"></i>
+    <i class="far fa-check-circle"></i>
   </span>
 
 </div>
