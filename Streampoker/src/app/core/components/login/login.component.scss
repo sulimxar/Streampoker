@@ -1,5 +1,14 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+
 div.jumbotron {
-    min-width: 300px;
+    min-width: 350px;
+}
+
+@include media-breakpoint-down(sm) { 
+    div.jumbotron {
+        min-width: 260px;
+    }
 }
 
 #rootDiv {

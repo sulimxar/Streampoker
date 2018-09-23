@@ -6,8 +6,18 @@
     @extend .col-md-7;
     @extend .col-lg-6;
     @extend .col-xl-5;
-    @extend .m-auto
+    @extend .m-auto;
 }
+
+@include media-breakpoint-down(xs) { 
+    .home-row {
+        padding: 0px;
+    }
+    .container {
+        padding: 0px;
+    }
+}
+
 
 // .list-group button:nth-child(1) {
 //     border-top: 0 none;
