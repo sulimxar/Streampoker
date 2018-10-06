@@ -1,4 +1,8 @@
-<div class="outer-container mb-1">
+<div class="outer-container mb-1 cursor-pointer"
+     data-toggle="tooltip"
+     data-placement="top"
+     title="Guest {{name}}"
+     trigger="manual">
   <div class="border rounded-circle d-flex justify-content-center align-items-center inner-container">
     <h6 class="text-muted ml-1, mt-1">{{abbreviation}}</h6>
   </div>
@@ -8,12 +12,14 @@
   </span>
 
   <span class="badge badge-checked text-warning"
-        *ngIf="mark !== '[checked]' && mark === ' '">
+        *ngIf="mark !== '[checked]' && mark === ' '"
+        title="Did not vote">
     <i class="far fa-times-circle"></i>
   </span>
 
   <span class="badge badge-checked text-success"
-        *ngIf="mark === '[checked]'">
+        *ngIf="mark === '[checked]'"
+        title="Ready!">
     <i class="far fa-check-circle"></i>
   </span>
 
