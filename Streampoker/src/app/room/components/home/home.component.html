@@ -50,6 +50,9 @@
             <div *ngIf="inputRoomKey?.errors.minlength">
               Minimum length is {{inputRoomKey?.errors.minlength.requiredLength}}
             </div>
+            <div *ngIf="inputRoomKey?.errors.maxlength">
+                Maximum length is {{inputRoomKey?.errors.maxlength.requiredLength}}
+              </div>
           </div>
         </div>
       </div>

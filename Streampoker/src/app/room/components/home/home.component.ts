@@ -1,4 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
+declare var $;
+import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
 import {
   NavigationService, NavigationServiceInjectionToken, UserServiceInjectionToken,
   UserService, RoomServiceInjectionToken, RoomService, BusyServiceInjectionToken, BusyService, Room, AppUser
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   private keyValueField: string;
 
@@ -36,6 +37,17 @@ export class HomeComponent implements OnInit {
       this.rooms$ = this.roomService.getRoomsByOwner(this.appUser.uid);
       this.rooms$.take(1).subscribe(r => {
         this.busyService.setBusy(false);
+      });
+    });
+  }
+
+  ngAfterViewInit(): void {
+    $(function () {
+      const max_length = $('#inputRoomKey').attr('maxlength');
+      $('#inputRoomKey').on('keyup', function () {
+        if (this.value.length >= max_length) {
+          $(this).val($(this).val().substr(0, max_length));
+        }
       });
     });
   }
