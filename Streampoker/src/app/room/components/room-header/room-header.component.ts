@@ -11,6 +11,7 @@ export class RoomHeaderComponent implements OnInit {
 
   @Input() appUser: AppUser;
   @Input() room: Room;
+  @Input() isRoomNotFound: boolean;
 
   constructor() {
   }

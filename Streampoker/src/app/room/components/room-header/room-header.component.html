@@ -3,7 +3,8 @@
   <h4 class="ml-2 align-self-end opacity-50">
     {{room?.key}}
   </h4>
-  <div class="ml-auto align-self-start">
+  <div class="ml-auto align-self-start"
+       *ngIf="!isRoomNotFound">
     <span class="text-muted text-smaller mr-1">
       <i class="fa fa-user "></i>
       ({{room?.guests.length}})
@@ -13,17 +14,15 @@
     </app-room-share>
   </div>
 </div>
-<div class="border-bottom pb-1">
-  <span class="text-info" style="margin-left: 1px;">{{room?.name}}</span>
+
+<div class="border-bottom pb-1"
+     *ngIf="!isRoomNotFound">
+  <span class="text-info"
+        style="margin-left: 1px;">{{room?.name}}</span>
 </div>
 
-
-<!-- 
-<p>
-  room-header works!
-
-  <br/>
-  user: {{appUser | json}}
-  <br/>
-  room: {{room | json}}
-</p> -->
+<div class="border-bottom pb-1"
+     *ngIf="isRoomNotFound">
+  <span class="text-info"
+        style="margin-left: 1px;">Oops! Problem...</span>
+</div>

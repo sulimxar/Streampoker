@@ -1,14 +1,9 @@
 <app-room-header [appUser]="appUser"
-                 [room]="room$ | async"></app-room-header>
+                 [room]="room$ | async"
+                 [isRoomNotFound]="isRoomNotFound"></app-room-header>
 
-<!-- <p>
-  room works: {{roomKey}}
-  <br/> user: {{appUser | json}}
-  <br/> room: {{room$ | async | json}}
-
-</p> -->
-
-<div *ngIf="room$ | async as room" class="mt-3">
+<div *ngIf="room$ | async as room"
+     class="mt-3">
   <div *ngIf="appUser">
     <div *ngIf="appUser.uid === room.ownerId; else guestView">
       <app-room-admin [appUser]="appUser"
@@ -19,4 +14,18 @@
                       [room]="room"></app-room-guest>
     </ng-template>
   </div>
+</div>
+
+
+<div *ngIf="isRoomNotFound"
+     class="text-center">
+  <p class="display-1 text-muted mt-5 opacity-50">
+    <i class="far fa-times-circle"></i>
+  </p>
+  <span class="text-muted mt-5 opacity-501">The Key is wrong or the Room does not exist anymore.</span>
+  <br>
+  <button class="btn btn-primary mt-5"
+          (click)="onGoHomeClicked()">
+    Another Room?
+  </button>
 </div>

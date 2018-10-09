@@ -29,6 +29,9 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
       .snapshotChanges().map(
         r => {
           const snapshot = (r[0] as AngularFireAction<DataSnapshot>);
+          if (!snapshot) {
+            return null;
+          }
           const roomId = snapshot.payload.key;
           const room = snapshot.payload.val();
           return this.convertFirebaseRoom(roomId, room);
@@ -153,13 +156,13 @@ export class FirebaseRoomRepositoryService implements RoomRepositoryService {
 
   private convertFirebaseMarksToTyped(marks: any): Mark[] {
     let result: Mark[] = [];
-      if (marks) {
-        result = Object.keys(marks as any[])
-          .map(userId => {
-            const m = marks[userId];
-            return new Mark(userId, m.name, m.value);
-          });
-      }
+    if (marks) {
+      result = Object.keys(marks as any[])
+        .map(userId => {
+          const m = marks[userId];
+          return new Mark(userId, m.name, m.value);
+        });
+    }
     return result;
   }
 

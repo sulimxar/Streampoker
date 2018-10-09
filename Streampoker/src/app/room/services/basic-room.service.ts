@@ -36,7 +36,7 @@ export class BasicRoomService implements RoomService {
   getRoom(roomKey: string): Observable<Room> {
     let room$ = this.roomRepositoryService.getRoomByKey(roomKey);
 
-    room$ = room$.map(room => this.filterAliveGuests(room));
+    room$ = room$.map(room => room ? this.filterAliveGuests(room) : null);
 
     return room$;
   }

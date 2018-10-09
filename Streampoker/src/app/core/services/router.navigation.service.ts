@@ -13,7 +13,7 @@ export class RouterNavigationService implements NavigationService {
   ) {
   }
 
-  navigateToLogin(returnUrl: string) {
+  navigateToLogin(returnUrl: string): void {
     this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
   }
 
@@ -25,12 +25,16 @@ export class RouterNavigationService implements NavigationService {
     this.router.navigate(['/room/' + roomKey]);
   }
 
-  returnFromLogin() {
+  navigateToHome(): void {
+    this.router.navigate(['/']);
+  }
+
+  returnFromLogin(): void {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     this.router.navigateByUrl(returnUrl);
   }
 
-  reloadCurrentLocation() {
+  reloadCurrentLocation(): void {
     this.router.navigated = false;
     this.router.navigate([this.router.url]);
   }

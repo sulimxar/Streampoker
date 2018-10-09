@@ -18,6 +18,7 @@ export class RoomComponent implements OnInit {
   roomKey: string;
   room$: Observable<Room>;
   appUser: AppUser;
+  isRoomNotFound: boolean;
 
   constructor(
     @Inject(UserServiceInjectionToken)
@@ -39,10 +40,18 @@ export class RoomComponent implements OnInit {
 
     this.userService.appUser$.take(1).subscribe(u => {
       this.appUser = u;
-      this.room$.take(1).subscribe(r => {
+      this.room$.take(1).subscribe(room => {
+        if (!room) {
+          this.isRoomNotFound = true;
+        }
+
         this.busyService.setBusy(false);
       });
     });
+  }
+
+  onGoHomeClicked() {
+    this.navigationService.navigateToHome();
   }
 
 }
