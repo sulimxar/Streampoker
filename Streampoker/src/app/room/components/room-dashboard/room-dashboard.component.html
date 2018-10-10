@@ -17,7 +17,8 @@
     <ul class="list-group mt-0 mb-2">
       <div class="list-group-item text-left d-flex align-items-center 
                   border-0 py-2 pl-2"
-           *ngFor="let guest of guests">
+           *ngFor="let guest of guests"
+           [class.opacity-50]="guest.isInactive && guest.mark == ' '">
         <div class="border rounded-circle d-flex justify-content-center align-items-center "
              style="width: 50px; height: 50px;">
 

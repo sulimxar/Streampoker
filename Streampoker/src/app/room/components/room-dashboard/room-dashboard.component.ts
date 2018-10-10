@@ -50,7 +50,6 @@ export class RoomDashboardComponent implements OnInit {
   }
 
   onSummarizeClicked() {
-    const guests = this.room.guests;
     const votedGuests = this.guests.filter(g => g.mark !== ' ' && g.mark !== '?');
     let vote = '?';
 

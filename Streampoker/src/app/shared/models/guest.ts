@@ -3,6 +3,7 @@ export class Guest {
     name: string;
     mark: string;
     ping: number;
+    isInactive: boolean;
 
     constructor (uid: string, name: string, mark: string, ping: number) {
         this.uid = uid;
