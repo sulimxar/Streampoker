@@ -31,7 +31,7 @@ export class RoomComponent implements OnInit {
     private busyService: BusyService,
     private route: ActivatedRoute,
   ) {
-    this.roomKey = this.route.snapshot.paramMap.get('key');
+    this.roomKey = this.route.snapshot.paramMap.get('key').toUpperCase();
   }
 
   ngOnInit() {
