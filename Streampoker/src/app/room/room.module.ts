@@ -29,7 +29,8 @@ import { UtilsModule, ServerTimeService } from '@utils.module';
     RouterModule.forChild([
       { path: '', component: HomeComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
       { path: 'new-room', component: NewRoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
-      { path: 'room/:key', component: RoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] }
+      { path: 'room/:key', component: RoomComponent, canActivate: [UserAuthGuardServiceInjectionToken] },
+      { path: '**', component: HomeComponent, canActivate: [UserAuthGuardServiceInjectionToken] }
     ])
   ],
   declarations: [
